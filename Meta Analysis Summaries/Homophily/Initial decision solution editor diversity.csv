@@ -1,0 +1,29 @@
+Study,Study type,Author position,Demographic,Demographic category,Assessor,Editor demographic,Rejected,Went through to next stage,% rejected,Year,Category,Subcategory,Journal impact factor,Stage,Notes
+Fox et al. (2016),Observational,Corresponding,Gender,Male,Editor,Male,249,772,24.38785504,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,Corresponding,Gender,Z_Female,Editor,Male,143,454,23.95309883,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,Corresponding,Gender,Male,Editor,Z_Female,73,290,20.11019284,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,Corresponding,Gender,Z_Female,Editor,Z_Female,39,175,18.22429907,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,First,Gender,Male,Editor,Male,239,741,24.3877551,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,First,Gender,Z_Female,Editor,Male,166,539,23.54609929,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,First,Gender,Male,Editor,Z_Female,68,263,20.54380665,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,First,Gender,Z_Female,Editor,Z_Female,48,214,18.32061069,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,Last,Gender,Male,Editor,Male,276,989,21.81818182,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,Last,Gender,Z_Female,Editor,Male,113,266,29.81530343,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,Last,Gender,Male,Editor,Z_Female,81,350,18.79350348,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Fox et al. (2016),Observational,Last,Gender,Z_Female,Editor,Z_Female,30,123,19.60784314,2012,Life sciences,Ecology & Evolution,4.861,Initial decision,
+Gilbert et al. (1994),Observational,Corresponding,Gender,Male,Editor,Male,308,492,38.5,1991,Health sciences,Health sciences,5.168,Initial decision,This study's text comments that there were no differences between final acceptance by author gender*editor gender but provides no data that we could use to meta-analyze this claim
+Gilbert et al. (1994),Observational,Corresponding,Gender,Male,Editor,Z_Female,278,327,45.95041322,1991,Health sciences,Health sciences,5.168,Initial decision,This study's text comments that there were no differences between final acceptance by author gender*editor gender but provides no data that we could use to meta-analyze this claim
+Gilbert et al. (1994),Observational,Corresponding,Gender,Z_Female,Editor,Male,59,145,28.92156863,1991,Health sciences,Health sciences,5.168,Initial decision,This study's text comments that there were no differences between final acceptance by author gender*editor gender but provides no data that we could use to meta-analyze this claim
+Gilbert et al. (1994),Observational,Corresponding,Gender,Z_Female,Editor,Z_Female,108,134,44.62809917,1991,Health sciences,Health sciences,5.168,Initial decision,This study's text comments that there were no differences between final acceptance by author gender*editor gender but provides no data that we could use to meta-analyze this claim
+Lane and Linden (2009),Observational,First,Gender,Male,Editor,Male,2,207,0.956937799,2007,Health sciences,Health sciences,3.684,Initial decision,
+Lane and Linden (2009),Observational,First,Gender,Male,Editor,Z_Female,3,310,0.958466454,2007,Health sciences,Health sciences,3.684,Initial decision,
+Lane and Linden (2009),Observational,First,Gender,Z_Female,Editor,Male,1,83,1.19047619,2007,Health sciences,Health sciences,3.684,Initial decision,
+Lane and Linden (2009),Observational,First,Gender,Z_Female,Editor,Z_Female,1,106,0.934579439,2007,Health sciences,Health sciences,3.684,Initial decision,
+Lane and Linden (2009),Observational,Last,Gender,Male,Editor,Male,3,242,1.224489796,2007,Health sciences,Health sciences,3.684,Initial decision,
+Lane and Linden (2009),Observational,Last,Gender,Male,Editor,Z_Female,3,350,0.849858357,2007,Health sciences,Health sciences,3.684,Initial decision,
+Lane and Linden (2009),Observational,Last,Gender,Z_Female,Editor,Male,0,51,0,2007,Health sciences,Health sciences,3.684,Initial decision,
+Lane and Linden (2009),Observational,Last,Gender,Z_Female,Editor,Z_Female,1,69,1.428571429,2007,Health sciences,Health sciences,3.684,Initial decision,
+Primack et al. (2009),Observational,Corresponding,Gender,Male,Editor,Z_Female,36,28,56.25,2005.5,Life sciences,Ecology & Evolution,2.718,Initial decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"
+Primack et al. (2009),Observational,Corresponding,Gender,Z_Female,Editor,Z_Female,16,9,64,2005.5,Life sciences,Ecology & Evolution,2.718,Initial decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"
+Primack et al. (2009),Observational,Corresponding,Gender,Male,Editor,Male,696,258,72.95597484,2005.5,Life sciences,Ecology & Evolution,2.718,Initial decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"
+Primack et al. (2009),Observational,Corresponding,Gender,Z_Female,Editor,Male,335,166,66.86626747,2005.5,Life sciences,Ecology & Evolution,2.718,Initial decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"

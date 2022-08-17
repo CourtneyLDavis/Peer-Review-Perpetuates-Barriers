@@ -1,0 +1,17 @@
+﻿Study,Study type,Author position,Demographic,Demographic category,Assessor,Editor demographic,Rejected,Went through to next stage,% rejected,Year,Category,Subcategory,Journal impact factor,Stage,Notes
+Edwards et al. (2018),Observational,First,Gender,Z_Female,Editor,Z_Female,56,58,49.12280702,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Edwards et al. (2018),Observational,First,Gender,Male,Editor,Z_Female,70,98,41.66666667,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Edwards et al. (2018),Observational,Last,Gender,Z_Female,Editor,Z_Female,35,38,47.94520548,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Edwards et al. (2018),Observational,Last,Gender,Male,Editor,Z_Female,97,118,45.11627907,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Edwards et al. (2018),Observational,First,Gender,Z_Female,Editor,Male,442,276,61.55988858,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Edwards et al. (2018),Observational,First,Gender,Male,Editor,Male,566,373,60.27689031,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Edwards et al. (2018),Observational,Last,Gender,Z_Female,Editor,Male,265,145,64.63414634,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Edwards et al. (2018),Observational,Last,Gender,Male,Editor,Male,766,506,60.22012579,2014,Life sciences,Ecology & Evolution,3.232,Overall decision,
+Handley et al. (2015),Observational,First,Gender,Z_Female,Editor,Z_Female,42,56,42.9,2006.5,Life sciences,Other Biological Science,0.975875,Overall decision,
+Handley et al. (2015),Observational,First,Gender,Z_Female,Editor,Male,281,394,41.6,2006.5,Life sciences,Other Biological Science,0.975875,Overall decision,
+Handley et al. (2015),Observational,First,Gender,Male,Editor,Z_Female,125,291,30.1,2006.5,Life sciences,Other Biological Science,0.975875,Overall decision,
+Handley et al. (2015),Observational,First,Gender,Male,Editor,Male,1178,1897,38.3,2006.5,Life sciences,Other Biological Science,0.975875,Overall decision,
+Primack et al. (2009),Observational,Corresponding,Gender,Male,Editor,Z_Female,18,46,28.125,2005.5,Life sciences,Ecology & Evolution,2.718,Overall decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"
+Primack et al. (2009),Observational,Corresponding,Gender,Z_Female,Editor,Z_Female,2,23,8,2005.5,Life sciences,Ecology & Evolution,2.718,Overall decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"
+Primack et al. (2009),Observational,Corresponding,Gender,Male,Editor,Male,380,574,39.83228512,2005.5,Life sciences,Ecology & Evolution,2.718,Overall decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"
+Primack et al. (2009),Observational,Corresponding,Gender,Z_Female,Editor,Male,177,324,35.32934132,2005.5,Life sciences,Ecology & Evolution,2.718,Overall decision,"Unsure on gender of Editor ""With"" so did not include that Editor in this calculation"
