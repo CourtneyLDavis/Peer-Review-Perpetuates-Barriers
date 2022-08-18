@@ -1,9 +1,9 @@
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Analysis of double-blind vs. single-blind data
-# Olivia Smith, with data formatting code by Wendy Leuenberger
-# Date first created: April 2022
-# Date last checked: 11-14 August 2022
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+############################################################
+#### Analysis of double-blind vs. single-blind data     ####
+#### Created by: Olivia Smith                           ####
+#### Data formatting code by: Wendy Leuenberger         ####
+#### Last modified: 11-14 August 2022                   ####
+############################################################
 
 ############ Set-up
 ############
