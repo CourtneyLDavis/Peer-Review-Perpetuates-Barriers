@@ -1,9 +1,11 @@
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Analysis of homophily data (editor and reviewer "match" to author) 
-# Olivia Smith, with data formatting code by Wendy Leuenberger
-# Date first created: April 2022
-# Date last checked: 12-13 August 2022
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+############################################################
+#### Analysis of homophily data                         ####
+#### (editor and reviewer "match" to author)            ####
+#### Created by: Olivia Smith                           ####
+#### Data formatting code by: Wendy Leuenberger         ####
+#### Last modified: 12-13 August 2022                   ####
+############################################################
+
 
 ############ Set-up
 ############
