@@ -1,9 +1,8 @@
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Analysis of bias data 
-# Olivia Smith
-# Date first created: April 2022
-# Date last checked: 10-14 August 2022
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+############################################################
+#### Analysis of bias data                              ####
+#### Created by: Olivia Smith                           ####
+#### Last modified: 10-14 August 2022                   ####
+############################################################
 
 ############ Set-up
 ############
