@@ -1,9 +1,9 @@
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-# Analysis of bias data 
-# Olivia Smith, with data formatting code by Wendy Leuenberger
-# Date first created: April 2022
-# Date last checked: 8-10 August 2022
-#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+############################################################
+#### Analysis of bias data                              ####
+#### Created by: Olivia Smith                           ####
+#### Data formatting code by: Wendy Leuenberger         ####
+#### Last modified: 8-10 August 2022                    ####
+############################################################
 
 ############ Set-up
 ############
