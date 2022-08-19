@@ -14,7 +14,7 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 
 # Scripts
 - `Fig5 Journal Policies by Impact Factor.R`:
-- `FigS9 Journal Policies No Breakdowns.R`:
+- `FigS9 Journal Policies.R`:
 - `FigS10 Journal Policies by Publisher Group.R`:
 - `FigS11.S12 Journal EIC count by Publisher Group.R`:
 - `FigS13 Journal EIC count Barplots.R`:
