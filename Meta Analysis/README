@@ -6,11 +6,27 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 
 *Please contact the first author with any questions about the code or publication: Olivia M. Smith (smitho17@msu.edu)
 
-## Abstract
-Peer review is central to the scientific process and scientists’ career advancement, but bias at various stages of the review process disadvantages some scientists1–5. Here we use peer review data from 312,740 biological sciences manuscripts across 31 studies to (1) examine evidence for differential peer review outcomes based on author demographics; (2) evaluate the efficacy of solutions to reduce bias; and (3) describe the current landscape of peer review policies for 541 ecology and evolution journals. We found notably worse review outcomes (e.g., lower overall acceptance rates) for authors whose institutional affiliations were in Asia, whose primary language is not English, and in countries with relatively low Human Development Indices. We found few data evaluating efficacy of interventions outside of reducing gender bias through double-blind review or diversifying reviewer/editorial boards. Despite evidence for review outcome gaps based on author demographics, few journals currently implement policies intended to mitigate bias (e.g., 15.9% of journals practiced double-blind review and 2.03% had their own reviewer guidelines on their websites that mentioned social justice issues). We advise journals to act now to collect data to evaluate the extent of and solutions to mitigate peer review bias, while moving swiftly to implement evidence-based best practices. 
+### Key Notes
+Each review stage has its own .csv file, separated by (1) bias without interventions, (2) double-blind vs. single-blind, (3) Editor homophily, and (4) reviewer homophily. Demographics and author positions are pooled in a file. The R code separates demographics/positions prior to analysis. There are three exceptions:
+1. Data broken down into individual countries are separated into their own review stage files. This is because each country has additional information. These files are designated as “[REVIEW STAGE] [DATASET] COUNTRY” 
 
-## Repository Directory
-### Meta Analysis
+2. For journal nationalism/journal country, all stage data are combined by this demographic category into one file with binomial outcome data (“Journal nationalism problem binomial.csv”; pre-initial, initial, post-initial, final, and overall decisions) and one with non-binomial outcome data (“Journal nationalism problem nonbinomial.csv”; review scores, time of review, number reviewers, and number revisions). This is because the file has extra information pertaining to the journal location.
 
-### Journal Policy Summaries
+3. The number of submissions files have one file with all data, “Number submissions data problem.csv,” and a series of 6 files created to allow for Likelihood Ratio Tests. The authorship positions are divided into different files due to the data formatting differing from other review aspects. The six include:
+- “Number submissions data FIRST CONTINENT problem.csv” that has complete observations for the first author’s affiliation’s continent
+- “Number submissions data CORR CONTINENT problem.csv” that has complete observations for the corresponding author’s affiliation’s continent
+- “Number submissions data LAST CONTINENT problem.csv” that has complete observations for the last author’s affiliation’s continent
+- “Number submissions data FIRST COUNTRY problem.csv” that has complete observations for the first author’s affiliation’s continent, language, and Human Development Index
+- “Number submissions data CORR COUNTRY problem.csv” that has complete observations for the corresponding author’s affiliation’s continent, language, and Human Development Index
+- “Number submissions data LAST COUNTRY problem.csv” that has complete observations for the last author’s affiliation’s continent, language, and Human Development Index
 
+
+Data examining bias without considering interventions is labelled “problem” 
+
+Data examining impacts of possible solutions is labelled “solution” 
+
+### Scripts
+- `Problem-end analyses for binomial data.R`: Code for analyses looking at bias in the absence of interventions are divided into review stages/aspects that are binomial (rejected, not rejected), including pre-initial, initial, post-initial review, and overall decisions
+- `Problem-end analyses for NON binomial data.R`: Code for analyses looking at bias in the absence of interventions are divided into review stages/aspects that are NOT binomial
+- `Solution-end analyses DOUBLE-BLIND.R`: Code for analyses examining efficacy of double-blind review
+- `Solution-end analyses HOMOPHILY.R`: Code for analyses examining assessor homophily
