@@ -13,10 +13,10 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 &nbsp;
 
 # Scripts
-- `Fig5 Journal Policies by Impact Factor.R`:
-- `FigS9 Journal Policies.R`:
-- `FigS10 Journal Policies by Publisher Group.R`:
-- `FigS11.S12 Journal EIC count by Publisher Group.R`:
-- `FigS13 Journal EIC count Barplots.R`:
-- `FigS14 Journal EIC count Scaled by Pop.R`:
-- `FigS15 Journal EIC count by Impact Factor in Europe.R`:
+- `Journal Policies by Impact Factor.R`: corresponds to Figure 5 in main text.
+- `Journal Policies.R`: corresponds to Supplementary Figure 9.
+- `Journal Policies by Publisher Group.R`: corresponds to Supplementary Figure 10.
+- `Journal EIC Count by Publisher Group.R`: corresponds to Supplementary Figures 11 and 12.
+- `Journal EIC Count Barplots.R`: corresponds to Supplementary Figure 13
+- `Journal EIC Count Scaled by Pop.R`: corresponds to Supplementary Figure 14.
+- `Journal EIC Count by Impact Factor in Europe.R`: corresponds to Supplementary Figure 15.
