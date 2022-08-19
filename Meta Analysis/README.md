@@ -15,12 +15,12 @@ Each review stage has its own .csv file, separated by (1) bias without intervent
   2. For journal nationalism/journal country, all stage data are combined by this demographic category into one file with binomial outcome data (“Journal nationalism problem binomial.csv”; pre-initial, initial, post-initial, final, and overall decisions) and one with non-binomial outcome data (“Journal nationalism problem nonbinomial.csv”; review scores, time of review, number reviewers, and number revisions). This is because the file has extra information pertaining to the journal location.
 
   3. The number of submissions files have one file with all data, “Number submissions data problem.csv,” and a series of 6 files created to allow for Likelihood Ratio Tests. The authorship positions are divided into different files due to the data formatting differing from other review aspects. The six include:
-    i. “Number submissions data FIRST CONTINENT problem.csv” that has complete observations for the first author’s affiliation’s continent
-    ii. “Number submissions data CORR CONTINENT problem.csv” that has complete observations for the corresponding author’s affiliation’s continent
-    iii. “Number submissions data LAST CONTINENT problem.csv” that has complete observations for the last author’s affiliation’s continent
-    iv. “Number submissions data FIRST COUNTRY problem.csv” that has complete observations for the first author’s affiliation’s continent, language, and Human Development Index
-    v. “Number submissions data CORR COUNTRY problem.csv” that has complete observations for the corresponding author’s affiliation’s continent, language, and Human Development Index
-    vi. “Number submissions data LAST COUNTRY problem.csv” that has complete observations for the last author’s affiliation’s continent, language, and Human Development Index
+    1. “Number submissions data FIRST CONTINENT problem.csv” that has complete observations for the first author’s affiliation’s continent
+    2. “Number submissions data CORR CONTINENT problem.csv” that has complete observations for the corresponding author’s affiliation’s continent
+    3. “Number submissions data LAST CONTINENT problem.csv” that has complete observations for the last author’s affiliation’s continent
+    4. “Number submissions data FIRST COUNTRY problem.csv” that has complete observations for the first author’s affiliation’s continent, language, and Human Development Index
+    5. “Number submissions data CORR COUNTRY problem.csv” that has complete observations for the corresponding author’s affiliation’s continent, language, and Human Development Index
+    6. “Number submissions data LAST COUNTRY problem.csv” that has complete observations for the last author’s affiliation’s continent, language, and Human Development Index
 
 
 Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. 
