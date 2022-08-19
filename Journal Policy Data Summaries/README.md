@@ -13,10 +13,10 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 &nbsp;
 
 # Scripts
-- `Fig5_JournalPolicyFigures_ByImpactFactor.R`:
-- `FigS9_JournalPolicyFigures_NoBreakdowns.R`:
-- `FigS10_JournalPolicyFigures_ByPublisherGroup.R`:
-- `FigS11.S12_Journal_EIC_count_ByPublisherGroup.R`:
-- `FigS13_Journal_EIC_count_Barplots.R`:
-- `FigS14_Journal_EIC_count_ScaledByPop.R`:
-- `FigS15_Journal_EIC_count_ByImpactFactor_Europe.R`:
+- `Fig5 Journal Policy Figures by Impact Factor.R`:
+- `FigS9 Journal Policy Figures No Breakdowns.R`:
+- `FigS10 Journal Policy Figures by Publisher Group.R`:
+- `FigS11.S12 Journal EIC count by Publisher Group.R`:
+- `FigS13 Journal EIC count Barplots.R`:
+- `FigS14 Journal EIC count Scaled by Pop.R`:
+- `FigS15 Journal EIC count by Impact Factor in Europe.R`:
