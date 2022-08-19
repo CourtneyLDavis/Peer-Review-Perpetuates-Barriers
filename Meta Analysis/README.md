@@ -1,6 +1,6 @@
 
 # Peer review bias perpetuates barriers for historically excluded groups
-In Review 
+## In Review 
 
 &nbsp;
 
@@ -10,7 +10,7 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 
 &nbsp;
 
-### Key Notes
+# Key Notes
 Each review stage has its own .csv file, separated by (1) bias without interventions, (2) double-blind vs. single-blind, (3) Editor homophily, and (4) reviewer homophily. Demographics and author positions are pooled in a file. The R code separates demographics/positions prior to analysis. There are three exceptions:
  1. Data broken down into individual countries are separated into their own review stage files. This is because each country has additional information. These files are designated as “[REVIEW STAGE] [DATASET] COUNTRY” 
 
@@ -30,7 +30,7 @@ Data examining bias without considering interventions is labelled “problem”;
 
 &nbsp;
 
-### Scripts
+# Scripts
 - `Problem-end analyses for binomial data.R`: Code for analyses looking at bias in the absence of interventions are divided into review stages/aspects that are binomial (rejected, not rejected), including pre-initial, initial, post-initial review, and overall decisions
 - `Problem-end analyses for NON binomial data.R`: Code for analyses looking at bias in the absence of interventions are divided into review stages/aspects that are NOT binomial
 - `Solution-end analyses DOUBLE-BLIND.R`: Code for analyses examining efficacy of double-blind review
