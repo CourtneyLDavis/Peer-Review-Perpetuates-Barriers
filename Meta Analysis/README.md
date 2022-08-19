@@ -6,7 +6,7 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 
 *Please contact the first author with any questions about the code or publication: Olivia M. Smith (smitho17@msu.edu)
 
-
+&nbsp;
 
 ### Key Notes
 Each review stage has its own .csv file, separated by (1) bias without interventions, (2) double-blind vs. single-blind, (3) Editor homophily, and (4) reviewer homophily. Demographics and author positions are pooled in a file. The R code separates demographics/positions prior to analysis. There are three exceptions:
