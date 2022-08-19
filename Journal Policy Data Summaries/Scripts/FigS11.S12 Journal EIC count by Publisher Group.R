@@ -124,7 +124,7 @@ EIC.pub.map <- tm_shape(World, bb = b, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
   tm_facets(by = "society_publisher", nrow = 4, ncol = 1,
             free.coords = FALSE) +
-  tm_credits(c("b Major, not soc.", "d Major, soc.", "f Mid-level, not soc.", "h Mid-level, soc."), 
+  tm_credits(c("b Major, not soc.", "d Major, soc.", "f Minor, not soc.", "h Minor, soc."), 
              position = c(0.001, 0.9), size = 0.65) +
   tm_layout(legend.outside = FALSE, panel.show = F,
             legend.position = c(0.01,0.01), legend.title.size = 0.6, legend.text.size = 0.5)  # saving along legend title = 1.1, legend text = 0.9
@@ -150,7 +150,7 @@ journals.pub.eur <- tm_shape(World, bb= b.eur, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
   tm_facets(by = "society_publisher", nrow = 4, ncol = 1, 
             free.coords = FALSE) +
-  tm_credits(c("a Major, not soc.", "c Major, soc.", "e Mid-level, not soc.", "g Mid-level, soc."), 
+  tm_credits(c("a Major, not soc.", "c Major, soc.", "e Minor, not soc.", "g Minor, soc."), 
              position = c(0.001, 0.9), size = 0.65) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T,
             legend.position = c(0.71,0.6), legend.title.size = 0.6, legend.text.size = 0.4)  # saving along legend title = 1.1, legend text = 0.9
@@ -165,7 +165,7 @@ EIC.pub.map.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
   tm_facets(by = "society_publisher", nrow = 4, ncol = 1,
             free.coords = FALSE) +
-  tm_credits(c("b Major, not soc.", "d Major, soc.", "f Mid-level, not soc.", "h Mid-level, soc."), 
+  tm_credits(c("b Major, not soc.", "d Major, soc.", "f Minor, not soc.", "h Minor, soc."), 
              position = c(0.001, 0.9), size = 0.65) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T,
             legend.position = c(0.75,0.6), legend.title.size = 0.6, legend.text.size = 0.4)  # saving along legend title = 1.1, legend text = 0.9
