@@ -424,7 +424,9 @@ revdiversity_majorsociety_fulldf$Category <- c("Geography", "Institutions", "Car
 revdiversity_majorsociety_fulldf$Publisher <- "majorsociety"
 
 
-# Journals published by mid-level publishers
+# Journals published by 
+
+level publishers
 revdiversity_other_geography <- table(revdiversity_other$guidelines.multiple.countries)
 revdiversity_other_geography_prop <- data.frame(revdiversity_other_geography / sum(revdiversity_other_geography))
 
@@ -483,7 +485,7 @@ revdiversity_all_plotting_df <- rbind(revdiversity_society_fulldf, revdiversity_
 revdiversity_all_plotting_df$Freq <- as.numeric(revdiversity_all_plotting_df$Freq)
 
 revdiversity_all_plotting_df$Publisher <- factor(revdiversity_all_plotting_df$Publisher, levels = c("society", "other", "majorsociety","major"))
-levels(revdiversity_all_plotting_df$Publisher) <- list ("Society-Affiliated" = "society" , "Mid-level Publisher" = "other", "Society-Affilated w/ Large Publisher" = "majorsociety", "Large Publisher" = "major")
+levels(revdiversity_all_plotting_df$Publisher) <- list ("Society-Affiliated" = "society" , "Minor Publisher" = "other", "Society-Affilated w/ Large Publisher" = "majorsociety", "Large Publisher" = "major")
 
 ### Plot C: Diversity axes mentioned for suggest reviewers
 plot_c <- ggplot(data = revdiversity_all_plotting_df, aes(x = Category, y = Freq, fill = Publisher)) + 
