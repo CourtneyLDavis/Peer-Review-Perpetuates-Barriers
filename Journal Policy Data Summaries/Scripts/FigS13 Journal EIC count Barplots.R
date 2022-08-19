@@ -18,7 +18,7 @@ library(janitor)
 
 
 ############ Format journal policy data
-journals <- read_csv(here("Journal Policy Summaries", "Data", "EJournalPolicies_Data_2022.csv"))
+journals <- read_csv(here("Journal Policy Summaries", "Data", "JournalPolicies_Data_2022.csv"))
 
 # cleans column titles
 journals %<>% clean_names()
@@ -49,7 +49,7 @@ j.count <- journals %>%
 j.count.plot <- ggplot(j.count, aes(x = count, y = fct_reorder(name, desc(-count)))) +
   geom_col() +
   scale_x_continuous(expand = c(0,0)) +
-  labs(title = "a. Number of EEB journals per country")+
+  labs(title = "a Number of EEB journals per country")+
   theme(axis.title.y = element_blank())  # remove y axis label
 
 j.count.plot
@@ -84,7 +84,7 @@ eic_total_count <- eic_long %>% # use eic_long to count all eics
 eic.plot <- ggplot(eic_total_count, aes(x = n, y = fct_reorder(value, desc(-n)))) +
   geom_col() +
   scale_x_continuous(expand = c(0,0)) +
-  labs(title = "b. Number of EEB journal EICs per country", x ="count") +
+  labs(title = "b Number of EEB journal EICs per country", x ="count") +
   theme(axis.title.y = element_blank())  # remove y axis label
 eic.plot
 
@@ -92,5 +92,5 @@ eic.plot
 counts <- grid.arrange(j.count.plot, eic.plot, ncol= 2)
 
 # save plot 
-ggsave(here("S13_journals.eic.barplots.tif"), plot = counts, device = "tiff", width = 5,
+ggsave(here("S13_journals.eic.barplots.tiff"), plot = counts, device = "tiff", width = 5,
        height = 4, scale = 2, units = "in")     
