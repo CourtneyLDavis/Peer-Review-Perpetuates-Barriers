@@ -1,7 +1,5 @@
 # Peer review bias perpetuates barriers for historically excluded groups
-In Review 
-
-&nbsp;
+## In Review 
 
 Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson, Brianna Foster, Julie Jarvey, Leonard N Jones, Wendy Leuenberger, Nan Nourn, Emily Conway, Cynthia Fiser, Zoe Hansen, Ani Hristova, Caitlin Mack, Alyssa N. Saunders, Olivia J. Utley, Moriah L. Young, Courtney L. Davis 
 
@@ -9,12 +7,12 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 
 &nbsp;
 
-### Key Notes
+# Key Notes
 
 
 &nbsp;
 
-### Scripts
+# Scripts
 - `Fig5_JournalPolicyFigures_ByImpactFactor.R`:
 - `FigS9_JournalPolicyFigures_NoBreakdowns.R`:
 - `FigS10_JournalPolicyFigures_ByPublisherGroup.R`:
