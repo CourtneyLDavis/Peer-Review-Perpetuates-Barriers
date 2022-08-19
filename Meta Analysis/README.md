@@ -1,7 +1,7 @@
 
 # Peer review bias perpetuates barriers for historically excluded groups
 In Review 
-
+&nbsp;
 Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson, Brianna Foster, Julie Jarvey, Leonard N Jones, Wendy Leuenberger, Nan Nourn, Emily Conway, Cynthia Fiser, Zoe Hansen, Ani Hristova, Caitlin Mack, Alyssa N. Saunders, Olivia J. Utley, Moriah L. Young, Courtney L. Davis 
 
 *Please contact the first author with any questions about the code or publication: Olivia M. Smith (smitho17@msu.edu)
@@ -26,6 +26,7 @@ Each review stage has its own .csv file, separated by (1) bias without intervent
 
 Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. 
 
+&nbsp;
 
 ### Scripts
 - `Problem-end analyses for binomial data.R`: Code for analyses looking at bias in the absence of interventions are divided into review stages/aspects that are binomial (rejected, not rejected), including pre-initial, initial, post-initial review, and overall decisions
