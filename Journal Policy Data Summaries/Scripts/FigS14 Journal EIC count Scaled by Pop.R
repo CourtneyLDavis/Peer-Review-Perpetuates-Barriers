@@ -76,7 +76,7 @@ journals.pop <- tm_shape(World, bb = b, projection = "+proj=robin") +
   tm_fill(col = "journals_per_pop_million", title = "# of journals/1 mill", 
           alpha = 0.75, palette = "viridis", style = "jenks") +
 # tm_credits("a. All journals", position = c(0.001, 0.87), size = 0.8) +
-  tm_layout(legend.position  = c(0.01,0.01), main.title = "a. All journals",  main.title.position = "left", main.title.size = 0.8,
+  tm_layout(legend.position  = c(0.01,0.01), main.title = "a All journals",  main.title.position = "left", main.title.size = 0.8,
             legend.title.size = 0.65, legend.text.size = 0.5)
 
 journals.pop
@@ -92,7 +92,7 @@ journals.pop.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
 #  tm_credits("c. All journals", position = c(0.001, 0.89), size = 1.1) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T, 
-            main.title = "c. All journals", main.title.position = "left", main.title.size = 0.8,
+            main.title = "c All journals", main.title.position = "left", main.title.size = 0.8,
             legend.position = c(0.66,0.64), legend.title.size = 0.7, legend.text.size = 0.5)
 
 journals.pop.eur
@@ -147,7 +147,7 @@ EIC.pop <- tm_shape(World, bb = b, projection = "+proj=robin") +
   tm_fill(col = "eic_pop_million", title = "# of EICs/1 mill", 
           alpha = 0.75, palette = "viridis", style = "jenks") +
   #  tm_credits("b. All editors-in-chief", position = c(0.001, 0.92), size = 0.8) +
-  tm_layout(legend.position = c(0.01,0.01), main.title = "b. All EICs",  main.title.position = "left", main.title.size = 0.8,
+  tm_layout(legend.position = c(0.01,0.01), main.title = "b All EICs",  main.title.position = "left", main.title.size = 0.8,
             legend.title.size = 0.65, legend.text.size = 0.5)
 
 EIC.pop
@@ -161,13 +161,13 @@ EIC.pop.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
  # tm_credits("d. All editors-in-chief", position = c(0.001, 0.9), size = 1) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T, 
-            main.title = "d. All EICs", main.title.position = "left", main.title.size = 0.8,
+            main.title = "d All EICs", main.title.position = "left", main.title.size = 0.8,
             legend.position = c(0.67,0.64), legend.title.size = 0.7, legend.text.size = 0.5)
 
 EIC.pop.eur
 
 #### save plots
-tiff(file="S14_journals.eic.scaled.tiff", height = 5, width = 7, units = "in", res = 300, bg = "transparent")
+tiff(file="S14_journals.eic.scaled.tiff", height = 5, width = 7, units = "in", res = 300, bg = "white")
 grid.newpage()
 pushViewport(viewport(layout=grid.layout(
   nrow = 2,
