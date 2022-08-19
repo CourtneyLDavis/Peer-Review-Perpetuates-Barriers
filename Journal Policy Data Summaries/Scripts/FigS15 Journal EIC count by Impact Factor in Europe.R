@@ -72,7 +72,7 @@ journals.eur <- tm_shape(World, bb=b.eur, projection = "+proj=robin") +
   tm_shape(world_journals_count, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of journals", 
           alpha = 0.75, palette = "viridis", style = "jenks") +
-  tm_credits("a. All journals", position = c(0.001, 0.87), size = 0.8) +
+  tm_credits("a All journals", position = c(0.001, 0.87), size = 0.8) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE,
             legend.bg.color = 'white', legend.frame = T,
             legend.position = c(0.7,0.57), legend.title.size = 0.7, legend.text.size = 0.5)
@@ -108,7 +108,7 @@ jif.map.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
   tm_facets(by = "jif_bin", nrow = 4, ncol = 1,
             free.coords = FALSE) +
-  tm_credits(c("c. High IF", "e. Mid IF", "g. Low IF", "i. No IF"), 
+  tm_credits(c("c High JIF", "e Mid JIF", "g Low JIF", "i No JIF"), 
              position = c(0.001, 0.87), size = 0.8) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T,
             legend.position = c(0.71,0.6), legend.title.size = 0.6, legend.text.size = 0.4) 
@@ -180,7 +180,7 @@ EIC.map.eur <- tm_shape(World, bb=b.eur, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
   # tm_layout(legend.position = c(0.01,0.05), main.title = "b. All editors-in-chief",  main.title.position = "center",
   #          legend.title.size = 0.9, legend.text.size = 0.65, main.title.size = 1)
-  tm_credits("b. All EICs", position = c(0.001, 0.87), size =0.8) +
+  tm_credits("b All EICs", position = c(0.001, 0.87), size =0.8) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE,
             legend.bg.color = 'white', legend.frame = T,
             legend.position = c(0.71,0.57), legend.title.size = 0.7, legend.text.size = 0.5)
@@ -194,7 +194,7 @@ EIC.if.map.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
           alpha = 0.75, palette = "viridis", style = "jenks") +
   tm_facets(by = "jif_bin", nrow = 4, ncol = 1,
             free.coords = FALSE) +
-  tm_credits(c("d. High IF", "f. Mid IF", "h. Low IF", "j. No IF"), 
+  tm_credits(c("d High JIF", "f Mid JIF", "h Low JIF", "j No JIF"), 
              position = c(0.001, 0.87), size = 0.8) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T,
           legend.position = c(0.75,0.6), legend.title.size = 0.6, legend.text.size = 0.4)  
@@ -204,7 +204,7 @@ EIC.if.map.eur
 
 ### save maps #####
 # save total journal and eic counts #
-tiff(file="S15.1_allcounts.eur.tiff", height = 7, width = 4.5, units = "in", res = 300, bg = "transparent")
+tiff(file="S15.1_allcounts.eur.tiff", height = 7, width = 4.5, units = "in", res = 300, bg = "white")
 grid.newpage()
 pushViewport(viewport(layout=grid.layout(ncol = 2)))
 print(journals.eur, vp = viewport(layout.pos.col = 1)) #, height = 0.75, width = 0.5)) #, x = 0, y = 0.75))
@@ -212,7 +212,7 @@ print(EIC.map.eur, vp = viewport(layout.pos.col = 2)) #, height = 0.75, width = 
 dev.off()
 
 # save counts by jif  #
-tiff(file="S15.2_jifcounts.eur.tiff", height = 7, width = 4.5, units = "in", res = 300, bg = "transparent")
+tiff(file="S15.2_jifcounts.eur.tiff", height = 7, width = 4.5, units = "in", res = 300, bg = "white")
 grid.newpage()
 pushViewport(viewport(layout=grid.layout(ncol = 2)))
 print(jif.map.eur, vp = viewport(layout.pos.col = 1)) #, height = 0.75, width = 0.5)) #, x = 0, y = 0.75))
