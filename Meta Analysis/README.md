@@ -24,8 +24,12 @@ Each review stage has its own .csv file, separated by (1) bias without intervent
     * “Number submissions data LAST COUNTRY problem.csv” that has complete observations for the last author’s affiliation’s continent, language, and Human Development Index
 
 
-Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. The `Meta Analysis File Meta-Data.xlsx` file provides a description for all variables included in meta-analysis data files.
- 
+Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. The `Meta Analysis File Meta-Data.xlsx` file provides a description for all variables included in meta-analysis data files. Estimated effect sizes generated from the meta-analysis are included in Supplementary Data 5, `Dataset S5 emmeans estimates from meta-analysis.xlsx`.
+
+&nbsp;
+
+We have also included Supplementary Data 4, `Dataset S4 Studies screened for inclusion in meta-analysis.xlsx` that describes the studies included in the meta-analysis as well as the published studies that were excluded from our analysis because data were not publicly available, and when contacted, authors did not respond or refused our requests for access.
+
 
 &nbsp;
 
