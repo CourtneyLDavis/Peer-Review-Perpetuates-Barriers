@@ -10,7 +10,7 @@ library(here)
 
 
 # Read in the journal policy data
-policy.data <- read.csv(here("Journal Policy Summaries","Data","Dataset S2 EcoEvo Journal Policies.csv"))
+policy.data <- read.csv(here("Journal Policy Data Summaries","Data","Dataset S2 EcoEvo Journal Policies.csv"))
 
 ##### Code to create pie charts describing journal policy data ####
 
