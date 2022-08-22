@@ -19,7 +19,7 @@ library(grid)
 
 
 ############ Format journal policy data
-journals <- read_csv(here("Journal Policy Summaries", "Data", "JournalPolicies_Data_2022.csv"))
+journals <- read_csv(here("Journal Policy Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
 
 # cleans column titles
 journals %<>% clean_names()
