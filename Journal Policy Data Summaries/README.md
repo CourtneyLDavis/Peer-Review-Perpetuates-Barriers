@@ -28,11 +28,11 @@ In our journal policy data collection, Elsevier journals were the only ones to p
 &nbsp;
 
 # Scripts
-- `Journal Policies by Impact Factor.R`: R Script used to summarize policies from 541 ecology and evolution journals by journal impact factor (JIF);  corresponds to Figure 5 in main text.
-- `Journal Policies.R`: R Script used to summarize policies from 541 ecology and evolution journals; corresponds to Supplementary Figure 9.
-- `Journal Policies by Publisher Group.R`: R Script used to summarize policies from 541 ecology and evolution journals by publisher group (i.e., major vs. minor publisher and society-affiliated vs. not affiliated); corresponds to Supplementary Figure 10.
-- `Journal EIC Count by Impact Factor.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs) by journal impact factor (JIF); corresponds to Figure 6 in main text.
-- `Journal EIC Count by Publisher Group.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs) by publisher group (i.e., major vs. minor publisher and society-affiliated vs. not affiliated); corresponds to Supplementary Figures 11 and 12.
-- `Journal EIC Count Barplots.R`: R Script used to summarize the number of ecology and evolution journals and Editor in Chiefs (EICs) per country; corresponds to Supplementary Figure 13.
-- `Journal EIC Count Scaled by Pop.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs), scaled by population size of the country; corresponds to Supplementary Figure 14.
-- `Journal EIC Count by Impact Factor in Europe.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs) in European countries by journal impact factor (JIF); corresponds to Supplementary Figure 15.
+- `Journal Policies by Impact Factor.R`: R Script used to summarize policies from 541 ecology and evolution journals by journal impact factor (JIF). This script was used to generate Figure 5 in main text.
+- `Journal Policies.R`: R Script used to summarize policies from 541 ecology and evolution journals. This script was used to generate Supplementary Figure 9.
+- `Journal Policies by Publisher Group.R`: R Script used to summarize policies from 541 ecology and evolution journals by publisher group (i.e., major vs. minor publisher and society-affiliated vs. not affiliated). This script was used to generate Supplementary Figure 10.
+- `Journal EIC Count by Impact Factor.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs) by journal impact factor (JIF). This script was used to generate Figure 6 in main text.
+- `Journal EIC Count by Publisher Group.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs) by publisher group (i.e., major vs. minor publisher and society-affiliated vs. not affiliated). This script was used to generate Supplementary Figures 11 and 12.
+- `Journal EIC Count Barplots.R`: R Script used to summarize the number of ecology and evolution journals and Editor in Chiefs (EICs) per country. This script was used to generate Supplementary Figure 13.
+- `Journal EIC Count Scaled by Pop.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs), scaled by population size of the country. This script was used to generate Supplementary Figure 14.
+- `Journal EIC Count by Impact Factor in Europe.R`: R Script used to map the number of ecology and evolution journals and Editor in Chiefs (EICs) in European countries by journal impact factor (JIF). This script was used to generate Supplementary Figure 15.
