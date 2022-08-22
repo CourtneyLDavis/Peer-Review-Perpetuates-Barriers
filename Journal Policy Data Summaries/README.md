@@ -19,7 +19,7 @@ We describe the current landscape of peer review in the subfields of ecology and
  8. what peer review model (single-, double-, or triple-blind; open; other) the journal used; and 
  9. if the journal publishes referee reports with manuscripts.
 
-These data are included in `Data` -> `Dataset S2 EcoEvo Journal Policies.csv` and summarized using the R scripts detailed below. The `Journal Policy Data Summaries File Meta-Data.xlsx file provides a description for all variables included in the journal policy data files.
+These data are included in `Data` -> `Dataset S2 EcoEvo Journal Policies.csv` and summarized using the R scripts detailed below. The `Journal Policy Data Summaries File Meta-Data.xlsx` file provides a description for all variables included in the journal policy data files.
 
 
 &nbsp;
