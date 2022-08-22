@@ -17,5 +17,7 @@ This folder contains all of the data generated and analyzed as part of the meta-
  
 These analyses leverage data from 31 studies, which cumulatively examined >312,740 manuscripts submitted to >640 journals. Our dataset represents >4,513,345 author position/demographic/review stage interactions. To learn more about how these datasets were generated and analyzed, please see the Online Methods associated with the article.
 
+&nbsp; 
+
 ### Journal Policy Summaries
 This folder contains all of the data generated and analyzed to describe the current landscape of journal policies in the subfields of ecology and evolution. For this, we collected peer review policy data from the websites of 541 journals, including information on each journal’s publisher, language requirements, peer review model, and reviewer guidelines, among others. To learn more about how these datasets were generated and analyzed, please see the Online Methods associated with the article.
