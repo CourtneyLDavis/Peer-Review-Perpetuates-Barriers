@@ -1415,7 +1415,7 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Reviewer.demo
 
 #####################################################
 ### Load the review score data 
-reviewscoredat <- read.csv("Review scores solution reviewer diversity.csv", fileEncoding="UTF-8-BOM")
+reviewscoredat <- read.csv(here("Meta Analysis", "Solution-end data", "Homophily", "Review scores solution reviewer diversity.csv"), fileEncoding="UTF-8-BOM")
 head(reviewscoredat)
 
 reviewscoredat$Demographic.category<- as.factor(reviewscoredat$Demographic.category)
