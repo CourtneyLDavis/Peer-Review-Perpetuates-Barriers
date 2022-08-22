@@ -11,5 +11,11 @@ Peer review is central to the scientific process and scientists’ career advanc
 
 ## Repository Directory
 ### Meta Analysis
+This folder contains all of the data generated and analyzed as part of the meta-analysis portion of the current study. The objectives of our meta-analysis were to:
+ 1. examine evidence for differential peer review outcomes in the biological sciences at multiple stages of the review process based on demographics of the first, corresponding, and last authors; and 
+ 2. evaluate the efficacy of proposed solutions to reduce bias, including double-blind review and editor/reviewer diversity. 
+ 
+These analyses leverage data from 31 studies, which cumulatively examined 312,740 manuscripts submitted to >640 journals. Our dataset represents 4,513,345 author position/demographic/review stage interactions. To learn more about how these datasets were generated and analyzed, please see the Online Methods associated with the article.
 
 ### Journal Policy Summaries
+This folder contains all of the data generated and analyzed to describe the current landscape of journal policies in the subfields of ecology and evolution. For this, we collected peer review policy data from the websites of 541 journals, including information on each journal’s publisher, language requirements, peer review model, and reviewer guidelines, among others. To learn more about how these datasets were generated and analyzed, please see the Online Methods associated with the article.
