@@ -11,7 +11,7 @@ Peer review is central to the scientific process and scientists’ career advanc
 
 ## Repository Directory
 ### Meta Analysis
-This folder contains all of the data generated and analyzed as part of the meta-analysis portion of the current study. The objectives of our meta-analysis were to:
+This folder contains all of the data generated and analyzed as part of the meta-analysis conducted in the current study. The objectives of our meta-analysis were to:
  1. examine evidence for differential peer review outcomes in the biological sciences at multiple stages of the review process based on demographics of the first, corresponding, and last authors; and 
  2. evaluate the efficacy of proposed solutions to reduce bias, including double-blind review and editor/reviewer diversity. 
  
