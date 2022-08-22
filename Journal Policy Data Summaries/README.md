@@ -23,6 +23,10 @@ These data (Supplementary Data 2 in main text) are included in `Data` > `Dataset
 
 &nbsp;
 
+In our journal policy data collection, Elsevier journals were the only ones to provide editor gender data on their websites (and this information was only available on 22 out of 60 journal websites; Supplementary Data 3 associated with main text). These data are included in `Data` > Dataset S3 Elsevier editor data.xlsx` but not analyzed for the main text.
+
+&nbsp;
+
 # Scripts
 - `Journal Policies by Impact Factor.R`: R Script used to summarize policies from 541 ecology and evolution journals by journal impact factor (JIF);  corresponds to Figure 5 in main text.
 - `Journal Policies.R`: R Script used to summarize policies from 541 ecology and evolution journals; corresponds to Supplementary Figure 9.
