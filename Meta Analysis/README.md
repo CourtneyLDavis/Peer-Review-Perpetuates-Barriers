@@ -24,7 +24,8 @@ Each review stage has its own .csv file, separated by (1) bias without intervent
     * “Number submissions data LAST COUNTRY problem.csv” that has complete observations for the last author’s affiliation’s continent, language, and Human Development Index
 
 
-Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. 
+Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. The `Meta Analysis File Meta-Data.xlsx` file provides a description for all variables included in meta-analysis data files.
+ 
 
 &nbsp;
 
