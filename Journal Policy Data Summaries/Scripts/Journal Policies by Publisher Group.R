@@ -424,9 +424,7 @@ revdiversity_majorsociety_fulldf$Category <- c("Geography", "Institutions", "Car
 revdiversity_majorsociety_fulldf$Publisher <- "majorsociety"
 
 
-# Journals published by 
-
-level publishers
+# Journals published by minor publishers
 revdiversity_other_geography <- table(revdiversity_other$guidelines.multiple.countries)
 revdiversity_other_geography_prop <- data.frame(revdiversity_other_geography / sum(revdiversity_other_geography))
 
@@ -500,6 +498,6 @@ plot_c <- ggplot(data = revdiversity_all_plotting_df, aes(x = Category, y = Freq
                      legend.position = "none") + 
   coord_flip() + facet_wrap(~Publisher, nrow = 4) + ylab("Proportion of journals") + 
   xlab("") +
-  ggtitle("C. Diversity Axes for Suggested Reviewers")
+  ggtitle("c Diversity Axes for Suggested Reviewers")
 
 
