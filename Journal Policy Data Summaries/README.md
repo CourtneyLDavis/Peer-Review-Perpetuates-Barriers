@@ -19,11 +19,11 @@ We describe the current landscape of peer review in the subfields of ecology and
  8. what peer review model (single-, double-, or triple-blind; open; other) the journal used; and 
  9. if the journal publishes referee reports with manuscripts.
 
-These data (Supplementary Data 2 in main text) are included in `Data` > `Dataset S2 EcoEvo Journal Policies.csv` and summarized using the R scripts detailed below. 
+These data (Supplementary Data 2 in main text) are included in `Data` -> `Dataset S2 EcoEvo Journal Policies.csv` and summarized using the R scripts detailed below. 
 
 &nbsp;
 
-In our journal policy data collection, Elsevier journals were the only ones to provide editor gender data on their websites (and this information was only available on 22 out of 60 journal websites; Supplementary Data 3 associated with main text). These data are included in `Data` > Dataset S3 Elsevier editor data.xlsx` but not analyzed for the main text.
+In our journal policy data collection, Elsevier journals were the only ones to provide editor gender data on their websites (and this information was only available on 22 out of 60 journal websites; Supplementary Data 3 associated with main text). These data are included in `Data` -> `Dataset S3 Elsevier editor data.xlsx` but not analyzed for the main text.
 
 &nbsp;
 
