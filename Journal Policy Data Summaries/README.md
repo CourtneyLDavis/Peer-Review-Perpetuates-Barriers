@@ -8,6 +8,16 @@ Olivia M. Smith*, Kayla L. Davis, Riley B. Pizza, Robin Waterman, Kara C. Dobson
 &nbsp;
 
 # Key Notes
+We collected data from the website(s) of each journal pertaining to: 
+1. the journal’s article language requirements;
+2. language editing services available to authors;
+3. journal prompts for authors to suggest diverse reviewers and what types of diversity authors were prompted to focus on in suggestions;
+4. if the journal had reviewer guidelines at all, and if so, if they were specific to the journal or linked to a general publisher website (to be counted, reviewer or referee guidelines must have been listed as such, either in a separate webpage/document or as part of the author guidelines);
+5. if reviewer guidelines mentioned social justice issues, and in particular, behaviors toward authors for whom English is a non-primary language;
+6. what country the Editor-in-Chief(s)’ primary institution was in;
+7. if the journal is affiliated with a society;
+8. what peer review model (single-, double-, or triple-blind; open; other) the journal used; and 
+9. if the journal publishes referee reports with manuscripts.
 
 
 &nbsp;
