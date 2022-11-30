@@ -1,8 +1,8 @@
 ################################################################
 #### Bar plots of journals and editors-in-chief by country  ####
 #### Created by: Nan Nourn                                  #### 
-#### Modified by: Julie Jarvey                              ####
-#### Last modified: 16 August 2022                          ####
+#### Modified by: Julie Jarvey, Courtney Davis              ####
+#### Last checked: 30 November 2022                         ####
 ################################################################
 
 ############ Set-up
