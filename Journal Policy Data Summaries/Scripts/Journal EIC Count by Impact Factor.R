@@ -20,7 +20,7 @@ library(janitor)
 
 
 ############ Format journal policy data
-journals <- read_csv(here("Journal Policy Data Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
+journals <- read_csv(here("Journal Policy Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
 
 # cleans column titles
 journals %<>% clean_names()
@@ -46,6 +46,7 @@ World$name[88] <- "Korea, Republic Of"
 
 
 #journals$name <- as.factor(journals$name)
+journals2 <- journals %>% filter((name != "Singapore") %>% replace_na(TRUE))
 journals %<>% filter(name != "Singapore") # Singapore is not included in world basemap, so need to filter out so the geometry works for mapping
 
 #######################################################################################################
@@ -76,11 +77,12 @@ journals.all <- tm_shape(World, bb=b, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(world_journals_count, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of journals", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("1 to 5", "6 to 12", "13 to 29", "30 to 50", "51 to 111")) +
   tm_credits("a All journals", 
              position = c(0.01, 0.9), size = 0.8) +
   tm_layout(legend.outside = FALSE, panel.show = F,
-            legend.position = c(0.01,0.01), legend.title.size = 0.6, legend.text.size = 0.5)  
+            legend.position = c(0.01,0.01), legend.title.size = 0.6, legend.text.size = 0.5,
+            legend.format = list(format = "f", text.separator = "<"))  
 journals.all
 
 ### JIF plots for journal counts ###################################################
@@ -102,13 +104,13 @@ journals_if_count_sf <- left_join(journals_if_count, World, by = "name") %>%
   st_as_sf()
 
 # map of EEB journals per country faceted by IF factor 
-
+journals_if_count_sf$jif_bin <- factor(journals_if_count_sf$jif_bin, levels = c("High", "Mid", "Low", "No IF"))
 
 jif.map <- tm_shape(World, bb = b, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(journals_if_count_sf, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of journals", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks",  labels = c("1 to 4", "5 to 11", "12 to 21", "22 to 36", "37 to 52")) +
   tm_facets(by = "jif_bin", nrow = 4, ncol = 1,
             free.coords = FALSE) +
   tm_credits(c("c High JIF", "e Mid JIF", "g Low JIF", "i No JIF"), 
@@ -124,8 +126,9 @@ jif.map
 # have to remove Singapore because it is not recognize in world basemaps
 # create eic tibble and create name column for future join
 # select jif and publisher/society columns for maps 
+journals2$jif_bin[is.na(journals2$jcr_2020_if)] <- 'No IF'
 
-eic <- journals %>% 
+eic <- journals2 %>% 
   select(journal, name, jcr_2020_if, jif_bin, eic_01, eic_02, eic_03, eic_04, eic_05, eic_06, eic_07, eic_08, eic_09)
 
 # create long format for one column of EICs denoted by rank editor
@@ -187,7 +190,7 @@ EIC.map <- tm_shape(World, bb=b, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(eic_total_journals, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of EICs", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("1 to 12", "13 to 34", "35 to 57", "58 to 83", "84 to 183")) +
   tm_credits("b All EICs",  
              position = c(0.001, 0.9), size = 0.8) +
   tm_layout(legend.outside = FALSE, panel.show = F,
@@ -212,12 +215,13 @@ eic_if <- left_join(eic_if_count, World, by = "name") %>%   st_as_sf()
 
 
 ## map of EICs by JIF category ####
+eic_if$jif_bin <- factor(eic_if$jif_bin, levels = c("High", "Mid", "Low", "No IF"))
 
 EIC.if.map <- tm_shape(World, bb = b, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(eic_if, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of EICs", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("1 to 5", "6 to 12", "13 to 22", "23 to 40", "41 to 82")) +
   tm_facets(by = "jif_bin", nrow = 4, ncol = 1,
             free.coords = FALSE) +
   tm_credits(c("d High JIF", "f Mid JIF", "h Low JIF", "j No JIF"), 

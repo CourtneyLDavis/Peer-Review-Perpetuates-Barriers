@@ -11,7 +11,7 @@ library(ggplot2)
 library(here)
 
 # Read in the journal policy data
-policy.data <- read.csv(here("Journal Policy Data Summaries","Data","Dataset S2 EcoEvo Journal Policies.csv"))
+policy.data <- read.csv(here("Journal Policy Summaries","Data","Dataset S2 EcoEvo Journal Policies.csv"))
 
 
 ##### Code to create pie charts describing journal policy data, broken down by type of publisher ####
@@ -424,7 +424,7 @@ revdiversity_majorsociety_fulldf$Category <- c("Geography", "Institutions", "Car
 revdiversity_majorsociety_fulldf$Publisher <- "majorsociety"
 
 
-# Journals published by minor publishers
+# Journals published by mid-level publishers
 revdiversity_other_geography <- table(revdiversity_other$guidelines.multiple.countries)
 revdiversity_other_geography_prop <- data.frame(revdiversity_other_geography / sum(revdiversity_other_geography))
 
@@ -483,7 +483,7 @@ revdiversity_all_plotting_df <- rbind(revdiversity_society_fulldf, revdiversity_
 revdiversity_all_plotting_df$Freq <- as.numeric(revdiversity_all_plotting_df$Freq)
 
 revdiversity_all_plotting_df$Publisher <- factor(revdiversity_all_plotting_df$Publisher, levels = c("society", "other", "majorsociety","major"))
-levels(revdiversity_all_plotting_df$Publisher) <- list ("Society-Affiliated" = "society" , "Minor Publisher" = "other", "Society-Affilated w/ Large Publisher" = "majorsociety", "Large Publisher" = "major")
+levels(revdiversity_all_plotting_df$Publisher) <- list ("Society-Affiliated" = "society" , "Mid-level Publisher" = "other", "Society-Affilated w/ Large Publisher" = "majorsociety", "Large Publisher" = "major")
 
 ### Plot C: Diversity axes mentioned for suggest reviewers
 plot_c <- ggplot(data = revdiversity_all_plotting_df, aes(x = Category, y = Freq, fill = Publisher)) + 
@@ -498,6 +498,6 @@ plot_c <- ggplot(data = revdiversity_all_plotting_df, aes(x = Category, y = Freq
                      legend.position = "none") + 
   coord_flip() + facet_wrap(~Publisher, nrow = 4) + ylab("Proportion of journals") + 
   xlab("") +
-  ggtitle("c Diversity Axes for Suggested Reviewers")
+  ggtitle("C. Diversity Axes for Suggested Reviewers")
 
 

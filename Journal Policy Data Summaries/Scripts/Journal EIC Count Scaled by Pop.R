@@ -14,14 +14,13 @@ library(sf)
 library(tmap)
 library(grid)
 library(tidytext)
-library(gt)
 library(janitor)
 library(magrittr)
 library(here)
 
 
 ############ Format journal policy data
-journals <- read_csv(here("Journal Policy Data Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
+journals <- read_csv(here("Journal Policy Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
 
 # cleans column titles
 journals %<>% clean_names()
@@ -50,14 +49,15 @@ World$name[88] <- "Korea, Republic Of"
 World %<>% mutate(pop_est_per_million = pop_est/10^6)  # find year data were collected
 
 #journals$name <- as.factor(journals$name)
-journals %<>% filter(name != "Singapore") # Singapore is not included in world basemap, so need to filter out so the geometry works for mapping
+journals2 <- journals %>% filter((name != "Singapore") %>% replace_na(TRUE))  # Singapore is not included in world basemap, so need to filter out so the geometry works for mapping
+journals %<>% filter(name != "Singapore")
 
 # join journals with World 
 world_journals <- left_join(journals, World, by = "name") %>% 
   st_as_sf()
 
 # count journal by country then plot
-world_journals_count <- world_journals %>% 
+world_journals_count <- world_journals %>% drop_na() %>%
   count(name, sort = TRUE)
 
 ## Journal count 
@@ -74,7 +74,7 @@ journals.pop <- tm_shape(World, bb = b, projection = "+proj=robin") +
   tm_shape(world_journals_per_pop_million,
            projection = "+proj=robin") +
   tm_fill(col = "journals_per_pop_million", title = "# of journals/1 mill", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("0.004 to 0.358", "0.359 to 0.972", "0.973 to 1.783", "1.784 to 2.991", "2.992 to 3.814")) +
 # tm_credits("a. All journals", position = c(0.001, 0.87), size = 0.8) +
   tm_layout(legend.position  = c(0.01,0.01), main.title = "a All journals",  main.title.position = "left", main.title.size = 0.8,
             legend.title.size = 0.65, legend.text.size = 0.5)
@@ -88,8 +88,8 @@ journals.pop.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(world_journals_per_pop_million,
            projection = "+proj=robin") +
-  tm_fill(col = "journals_per_pop_million", title = "# of journals/1 mill", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+  tm_fill(col = "journals_per_pop_million", title = "# of journals/1 mill", legend.show = FALSE,
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("0.004 to 0.358", "0.359 to 0.972", "0.973 to 1.783", "1.784 to 2.991", "2.992 to 3.814")) +
 #  tm_credits("c. All journals", position = c(0.001, 0.89), size = 1.1) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T, 
             main.title = "c All journals", main.title.position = "left", main.title.size = 0.8,
@@ -100,13 +100,13 @@ journals.pop.eur
 
 # EIC count ##############
 # Editors
-#H ere, we determine (1st) editors in chiefs (EIC) by country in a new section because we will be joining another 
+# Here, we determine (1st) editors in chiefs (EIC) by country in a new section because we will be joining another 
 # round of dataframes/tibbles. Remember, our first join `world_journals` was based on countries + journals with 
 # the accompany geometries. We have to make a new join (thus a new data frame/sf/tibble object) to have the correct 
 # polygon geometries of the corresponding countries.
 
 # create eic tibble and create name column for future join
-eic <- journals %>% 
+eic <- journals2 %>% 
   select(journal, name, jcr_2020_if, jif_bin, eic_01, eic_02, eic_03, eic_04, eic_05, eic_06, eic_07, eic_08, eic_09)
 
 # create long format for one column of EICs denoted by rank editor
@@ -145,7 +145,7 @@ EIC.pop <- tm_shape(World, bb = b, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(eic_total_journals, projection = "+proj=robin") +
   tm_fill(col = "eic_pop_million", title = "# of EICs/1 mill", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("0.004 to 0.116", "0.117 to 0.286", "0.287 to 0.692", "0.693 to 1.218", "1.219 to 1.642")) +
   #  tm_credits("b. All editors-in-chief", position = c(0.001, 0.92), size = 0.8) +
   tm_layout(legend.position = c(0.01,0.01), main.title = "b All EICs",  main.title.position = "left", main.title.size = 0.8,
             legend.title.size = 0.65, legend.text.size = 0.5)
@@ -157,8 +157,8 @@ EIC.pop
 EIC.pop.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(eic_total_journals, projection = "+proj=robin") +
-  tm_fill(col = "eic_pop_million", title = "# of EICs/1 mill", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+  tm_fill(col = "eic_pop_million", title = "# of EICs/1 mill", legend.show =
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("0.004 to 0.116", "0.117 to 0.286", "0.287 to 0.692", "0.693 to 1.218", "1.219 to 1.642")) +
  # tm_credits("d. All editors-in-chief", position = c(0.001, 0.9), size = 1) +
   tm_layout(legend.outside = FALSE, panel.show = FALSE, legend.bg.color = 'white', legend.frame = T, 
             main.title = "d All EICs", main.title.position = "left", main.title.size = 0.8,

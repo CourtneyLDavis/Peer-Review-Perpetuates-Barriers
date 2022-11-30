@@ -18,7 +18,7 @@ library(janitor)
 
 
 ############ Format journal policy data
-journals <- read_csv(here("Journal Policy Data Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
+journals <- read_csv(here("Journal Policy Summaries", "Data", "JournalPolicies_Data_2022.csv"))
 
 # cleans column titles
 journals %<>% clean_names()

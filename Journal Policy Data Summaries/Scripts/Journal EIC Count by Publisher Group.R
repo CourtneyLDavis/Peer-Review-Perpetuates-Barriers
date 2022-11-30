@@ -19,7 +19,7 @@ library(grid)
 
 
 ############ Format journal policy data
-journals <- read_csv(here("Journal Policy Data Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
+journals <- read_csv(here("Journal Policy Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
 
 # cleans column titles
 journals %<>% clean_names()
@@ -47,7 +47,7 @@ World$name[88] <- "Korea, Republic Of"
 
 
 #journals$name <- as.factor(journals$name)
-journals %<>% filter(name != "Singapore") # Singapore is not included in world basemap, so need to filter out so the geometry works for mapping
+journals %<>% filter((name != "Singapore") %>% replace_na(TRUE)) # Singapore is not included in world basemap, so need to filter out so the geometry works for mapping
 
 
 
@@ -59,7 +59,7 @@ journals_society <- journals %>%
   select(journal, name, jcr_2020_if, jif_bin, society_publisher)
 
 journals_society_count <- journals_society %>% 
-  count(name, society_publisher, sort = TRUE)
+  count(name, society_publisher, sort = TRUE) %>% drop_na()
 
 journals_society_count_sf <- left_join(journals_society_count, World, by = "name") %>% 
   st_as_sf()
@@ -75,10 +75,10 @@ journals.pub <- tm_shape(World, bb= b, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(journals_society_count_sf, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of journals", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("1 to 4", "5 to 12", "13 to 31", "32 to 41", "42 to 53")) +
   tm_facets(by = "society_publisher", nrow = 4, ncol = 1, 
             free.coords = FALSE) +
-  tm_credits(c("a Major, not soc.", "c Major, soc.", "e Mid-level, not soc.", "g Mid-level, soc."), 
+  tm_credits(c("a Major, not soc.", "c Major, soc.", "e Minor, not soc.", "g Minor, soc."), 
              position = c(0.001, 0.9), size = 0.65) +
   tm_layout(legend.outside = FALSE, panel.show = F,
             legend.position = c(0.01,0.01), legend.title.size = 0.6, legend.text.size = 0.5)  # saving along legend title = 1.1, legend text = 0.9
@@ -90,11 +90,11 @@ journals.pub
 # Editors
 # create eic tibble and create name column for future join
 eic <- journals %>% 
-  select(journal, name, jcr_2020_if, jif_bin, eic_01, eic_02, eic_03, eic_04, eic_05, eic_06, eic_07, eic_08, eic_09, society_publisher)
+  select(journal, name, eic_01, eic_02, eic_03, eic_04, eic_05, eic_06, eic_07, eic_08, eic_09, society_publisher)
 
 # create long format for one column of EICs denoted by rank editor
 eic_long <- eic %>% 
-  pivot_longer(cols = 5:13, names_to = "variable", values_to = "value")
+  pivot_longer(cols = 3:11, names_to = "variable", values_to = "value")
 
 # this rearranges the factor level of the variable column
 eic_long %<>%
@@ -121,7 +121,7 @@ EIC.pub.map <- tm_shape(World, bb = b, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(eic_pub, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of EICs", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks", labels = c("1 to 6", "7 to 16", "17 to 29", "30 to 52", "53 to 83")) +
   tm_facets(by = "society_publisher", nrow = 4, ncol = 1,
             free.coords = FALSE) +
   tm_credits(c("b Major, not soc.", "d Major, soc.", "f Minor, not soc.", "h Minor, soc."), 
@@ -147,7 +147,7 @@ journals.pub.eur <- tm_shape(World, bb= b.eur, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(journals_society_count_sf, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of journals", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks",  labels = c("1 to 4", "5 to 12", "13 to 31", "32 to 41", "42 to 53")) +
   tm_facets(by = "society_publisher", nrow = 4, ncol = 1, 
             free.coords = FALSE) +
   tm_credits(c("a Major, not soc.", "c Major, soc.", "e Minor, not soc.", "g Minor, soc."), 
@@ -162,7 +162,7 @@ EIC.pub.map.eur <- tm_shape(World, bb = b.eur, projection = "+proj=robin") +
   tm_borders(col = "black") +
   tm_shape(eic_pub, projection = "+proj=robin") +
   tm_fill(col = "n", title = "# of EICs", 
-          alpha = 0.75, palette = "viridis", style = "jenks") +
+          alpha = 0.75, palette = "viridis", style = "jenks",labels = c("1 to 6", "7 to 16", "17 to 29", "30 to 52", "53 to 83")) +
   tm_facets(by = "society_publisher", nrow = 4, ncol = 1,
             free.coords = FALSE) +
   tm_credits(c("b Major, not soc.", "d Major, soc.", "f Minor, not soc.", "h Minor, soc."), 
