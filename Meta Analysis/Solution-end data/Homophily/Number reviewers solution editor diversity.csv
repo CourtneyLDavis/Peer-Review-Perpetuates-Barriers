@@ -1,0 +1,33 @@
+Study,Study type,Author position,Demographic,Demographic category,Assessor,Editor demographic,Total manuscripts,N.reviewers,Year,Category,Subcategory,Journal impact factor,Stage,Notes
+Edwards et al. (2018),Observational,First,Gender,Z_Female,Editor,Z_Female,156,1.49,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Edwards et al. (2018),Observational,First,Gender,Male,Editor,Z_Female,233,1.41,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Edwards et al. (2018),Observational,First,Gender,Z_Female,Editor,Male,956,1.38,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Edwards et al. (2018),Observational,First,Gender,Male,Editor,Male,1289,1.34,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Edwards et al. (2018),Observational,Last,Gender,Z_Female,Editor,Z_Female,104,1.45,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Edwards et al. (2018),Observational,Last,Gender,Male,Editor,Z_Female,290,1.43,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Edwards et al. (2018),Observational,Last,Gender,Z_Female,Editor,Male,555,1.35,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Edwards et al. (2018),Observational,Last,Gender,Male,Editor,Male,1721,1.35,2014,Life sciences,Ecology & Evolution,3.232,Number of reviewers,
+Fox et al. (2016),Observational,Corresponding,Gender,Male,Editor,Male,772,2.349740933,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,Corresponding,Gender,Z_Female,Editor,Male,454,2.354625551,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,Corresponding,Gender,Male,Editor,Z_Female,290,2.217241379,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,Corresponding,Gender,Z_Female,Editor,Z_Female,175,2.211428571,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,First,Gender,Male,Editor,Male,741,2.341430499,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,First,Gender,Z_Female,Editor,Male,539,2.359925788,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,First,Gender,Male,Editor,Z_Female,263,2.220532319,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,First,Gender,Z_Female,Editor,Z_Female,214,2.224299065,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,Last,Gender,Male,Editor,Male,989,2.352881699,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,Last,Gender,Z_Female,Editor,Male,266,2.345864662,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,Last,Gender,Male,Editor,Z_Female,350,2.191428571,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Fox et al. (2016),Observational,Last,Gender,Z_Female,Editor,Z_Female,123,2.300813008,2012,Life sciences,Ecology & Evolution,4.861,Number of reviewers,
+Petty et al. (1999),Observational,Corresponding,Gender,Male,Editor,Male,337,2.270029674,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Petty et al. (1999),Observational,Corresponding,Gender,Z_Female,Editor,Male,122,2.196721311,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Petty et al. (1999),Observational,Corresponding,Gender,Male,Editor,Z_Female,189,2.169312169,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Petty et al. (1999),Observational,Corresponding,Gender,Z_Female,Editor,Z_Female,82,2.134146341,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Petty et al. (1999),Observational,First,Gender,Male,Editor,Male,316,2.284810127,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Petty et al. (1999),Observational,First,Gender,Z_Female,Editor,Male,139,2.165467626,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Petty et al. (1999),Observational,First,Gender,Male,Editor,Z_Female,187,2.171122995,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Petty et al. (1999),Observational,First,Gender,Z_Female,Editor,Z_Female,82,2.12195122,1988.75,Health sciences,Health sciences,1.757,Number of reviewers,Journal studied is double-blind
+Santos de Barros et al. (2021),Observational,First,Gender,Male,Editor,Male,72,2.236111111,2019,Life sciences,Other Biological Science,0.573,Number of reviewers,Journal studied is double-blind
+Santos de Barros et al. (2021),Observational,First,Gender,Z_Female,Editor,Male,62,2.516129032,2019,Life sciences,Other Biological Science,0.573,Number of reviewers,Journal studied is double-blind
+Santos de Barros et al. (2021),Observational,First,Gender,Male,Editor,Z_Female,81,2.172839506,2019,Life sciences,Other Biological Science,0.573,Number of reviewers,Journal studied is double-blind
+Santos de Barros et al. (2021),Observational,First,Gender,Z_Female,Editor,Z_Female,51,2.235294118,2019,Life sciences,Other Biological Science,0.573,Number of reviewers,Journal studied is double-blind
