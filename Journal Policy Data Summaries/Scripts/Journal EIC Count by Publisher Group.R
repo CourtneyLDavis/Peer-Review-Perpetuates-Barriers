@@ -1,8 +1,8 @@
 ############################################################
 #### Journal and EIC count maps by publisher            ####
 #### Created by: Nan Nourn                              #### 
-#### Modified by: Julie Jarvey                          ####
-#### Last modified: 16 August 2022                      ####
+#### Modified by: Julie Jarvey, Courtney Davis          ####
+#### Last checked: 30 November 2022                     ####
 ############################################################
 
 ############ Set-up
@@ -19,7 +19,7 @@ library(grid)
 
 
 ############ Format journal policy data
-journals <- read_csv(here("Journal Policy Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
+journals <- read_csv(here("Journal Policy Data Summaries", "Data", "Dataset S2 EcoEvo Journal Policies.csv"))
 
 # cleans column titles
 journals %<>% clean_names()
