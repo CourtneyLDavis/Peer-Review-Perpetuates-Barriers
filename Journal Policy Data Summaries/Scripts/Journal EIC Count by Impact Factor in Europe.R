@@ -1,7 +1,7 @@
 #############################################################
 #### Journal and EIC count maps by journal impact factor ####
 #### Created by: Nan Nourn                               #### 
-#### Modified by: Julie Jarvey                           ####
+#### Modified by: Julie Jarvey, Courtney Davis           ####
 #### Last checked: 30 November 2022                      ####
 #############################################################
 
