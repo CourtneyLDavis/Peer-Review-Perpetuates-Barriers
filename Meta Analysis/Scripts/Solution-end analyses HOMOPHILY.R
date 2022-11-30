@@ -1,11 +1,9 @@
-############################################################
-#### Analysis of homophily data                         ####
-#### (editor and reviewer "match" to author)            ####
-#### Created by: Olivia Smith                           ####
-#### Data formatting code by: Wendy Leuenberger         ####
-#### Last modified: 12-13 August 2022                   ####
-############################################################
-
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Analysis of homophily data (editor and reviewer "match" to author) 
+# Olivia Smith, with data formatting code by Wendy Leuenberger
+# Date first created: April 2022
+# Date last fully checked: 22 Nov 2022
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ############ Set-up
 ############
@@ -68,7 +66,7 @@ modelparm.glmmTMB <- function (model, coef. = function(x) fixef(x)[[component]],
 #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ###############
-##############
+###############
 
 #################INITIAL DATA EDITOR homophily
 
@@ -472,6 +470,10 @@ sum(Original[,c('Rejected', 'Went.through.to.next.stage')])
 ##INITIAL DECISION 
 #####################################################
 
+initialdatED$Demographic.category<- as.factor(initialdatED$Demographic.category)
+initialdatED$Study<- as.factor(initialdatED$Study)
+initialdatED$Editor.demographic<- as.factor(initialdatED$Editor.demographic)
+
 ###################################
 ###################################
 ### FIRST AUTHOR gender
@@ -562,6 +564,10 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Editor.demogr
 #####################################################
 ##POST-INITIAL REVIEW DECISION 
 #####################################################
+
+postinitialreviewdatED$Demographic.category<- as.factor(postinitialreviewdatED$Demographic.category)
+postinitialreviewdatED$Study<- as.factor(postinitialreviewdatED$Study)
+postinitialreviewdatED$Editor.demographic<- as.factor(postinitialreviewdatED$Editor.demographic)
 
 ###################################
 ###################################
@@ -658,6 +664,10 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Editor.demogr
 ##FINAL DECISION 
 #####################################################
 
+finaldatED$Demographic.category<- as.factor(finaldatED$Demographic.category)
+finaldatED$Study<- as.factor(finaldatED$Study)
+finaldatED$Editor.demographic<- as.factor(finaldatED$Editor.demographic)
+
 ###################################
 ###################################
 ### FIRST AUTHOR gender
@@ -701,7 +711,7 @@ mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Editor.demographic #1 study
                 , data = finaldatED.gender.corresponding, family = binomial)
 summary(mod1)
 
-###Use a Likelihood Ratio test to see if interaction is supported between demographic category and editor "match'
+###Use a Likelihood Ratio Test to see if interaction is supported between demographic category and editor "match'
 ##remove interaction for comparison model
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Editor.demographic #one study
                 , data = finaldatED.gender.corresponding, family = binomial)
@@ -720,7 +730,7 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Editor.demogr
 ###################################
 ### LAST AUTHOR gender
 ### Editor homophily
-finaldatED.gender.last<- subset(finaldatED, Demographic=="Gender" & Author.position == "Last" )
+finaldatED.gender.last<-subset(finaldatED, Demographic=="Gender" & Author.position == "Last" )
 finaldatED.gender.last$mean_year<-(finaldatED.gender.last$Year - 1988.75)
 
 ##just 1 study in this category so all levels of JIF and mean year are the same
@@ -728,7 +738,7 @@ mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Editor.demographic #1 study
                 , data = finaldatED.gender.last, family = binomial)
 summary(mod1)
 
-###Use a Likelihood Ratio test to see if interaction is supported between demographic category and editor "match'
+###Use a Likelihood Ratio Test to see if interaction is supported between demographic category and editor "match'
 ##remove interaction for comparison model
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Editor.demographic #one study
                 , data = finaldatED.gender.last, family = binomial)
@@ -751,6 +761,8 @@ overalldatED$Demographic.category<- as.factor(overalldatED$Demographic.category)
 overalldatED$Category<- as.factor(overalldatED$Category)
 overalldatED$Subcategory<- as.factor(overalldatED$Subcategory)
 overalldatED$Study<- as.factor(overalldatED$Study)
+overalldatED$Editor.demographic<- as.factor(overalldatED$Editor.demographic)
+
 
 ####################Subset overall data by demographic and position##################
 
@@ -824,7 +836,7 @@ mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Editor.demographic #one stu
                 , data = overalldatED.gender.last, family = binomial)
 summary(mod1)
 
-###Use a Likelihood Ratio test to see if interaction is supported between demographic category and editor "match'
+###Use a Likelihood Ratio Test to see if interaction is supported between demographic category and editor "match'
 ##remove interaction for comparison model
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Editor.demographic #just one study
                 , data = overalldatED.gender.last, family = binomial)
@@ -853,6 +865,10 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Editor.demogr
 nreviewersdat <- read.csv(here("Meta Analysis", "Solution-end data", "Homophily", "Number reviewers solution editor diversity.csv"), fileEncoding="UTF-8-BOM")
 head(nreviewersdat)
 
+nreviewersdat$Study<- as.factor(nreviewersdat$Study)
+nreviewersdat$Demographic.category<- as.factor(nreviewersdat$Demographic.category)
+nreviewersdat$Editor.demographic<- as.factor(nreviewersdat$Editor.demographic)
+
 nreviewersdat.gender.first<- subset(nreviewersdat, Author.position == "First" )
 nreviewersdat.gender.corresponding<- subset(nreviewersdat, Author.position == "Corresponding" )
 nreviewersdat.gender.last<- subset(nreviewersdat, Author.position == "Last" )
@@ -872,7 +888,7 @@ mod1 <- glmmTMB(N.reviewers ~ Demographic.category * Editor.demographic + Journa
                   mean_year + (1|Study), data = nreviewersdat.gender.first, family = gaussian)
 summary(mod1)
 
-#take out interaction for VIF test
+#take out interaction for variance inflation factor test
 modvif <- glmmTMB(N.reviewers ~ Demographic.category + Editor.demographic + Journal.impact.factor +
                   mean_year + (1|Study), data = nreviewersdat.gender.first, family = gaussian)
 ##check assumptions
@@ -880,6 +896,7 @@ check_collinearity(modvif) #fine - max VIF = 1.01
 testDispersion(mod1)
 simulationOutput <- simulateResiduals(fittedModel = mod1, plot = F)
 plot(simulationOutput) #fine
+#on check on 11/22/2022 got error qu = 0.25, log(sigma) = -2.353321 : outer Newton did not converge fully.
 
 ##remove interaction for Likelihood Ratio Test
 mod2 <- glmmTMB(N.reviewers ~ Demographic.category + Editor.demographic + Journal.impact.factor +
@@ -910,7 +927,7 @@ mod1 <- glmmTMB(N.reviewers ~ Demographic.category * Editor.demographic + #2 stu
                   Study, data = nreviewersdat.gender.corresponding, family = gaussian)
 summary(mod1)
 
-#take out interaction for VIF test
+#take out interaction for variance inflation factor test
 modvif <- glmmTMB(N.reviewers ~ Demographic.category + Editor.demographic + #2 studies
                   Study, data = nreviewersdat.gender.corresponding, family = gaussian)
 ##Check assumptions
@@ -947,7 +964,7 @@ mod1 <- glmmTMB(N.reviewers ~ Demographic.category * Editor.demographic + # 2 st
                   Study, data = nreviewersdat.gender.last, family = gaussian)
 summary(mod1)
 
-#take out interaction for VIF test
+#take out interaction for variance inflation factor test
 modvif <- glmmTMB(N.reviewers ~ Demographic.category + Editor.demographic + #2 studies
                     Study, data = nreviewersdat.gender.last, family = gaussian)
 ##Check assumptions
@@ -991,7 +1008,7 @@ postinitialreviewdatREV$Category<- as.factor(postinitialreviewdatREV$Category)
 postinitialreviewdatREV$Subcategory<- as.factor(postinitialreviewdatREV$Subcategory)
 postinitialreviewdatREV$Study<- as.factor(postinitialreviewdatREV$Study)
 
-####################Subset overall data by demographic and position##################
+####################Subset post-initial review data by demographic and position##################
 
 ###################################
 ###################################
@@ -1023,7 +1040,7 @@ mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Reviewer.demographic + Jour
                   (1|Study), data = postinitialreviewdatREV.gender_1.first, family = binomial)
 summary(mod1)
 
-###Use a Likelihood Ratio test to see if interaction is supported between reviewer and author demographic "match"
+###Use a Likelihood Ratio Test to see if interaction is supported between reviewer and author demographic "match"
 ##remove interaction for comparison model
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic + Journal.impact.factor +#three studies
                   (1|Study), data = postinitialreviewdatREV.gender_1.first, family = binomial)
@@ -1053,9 +1070,9 @@ mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Reviewer.demographic + Jour
 summary(mod1)
 
 ##remove interaction term to check for multicollinearity issues
-mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic + Journal.impact.factor + # studies
+mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic + Journal.impact.factor + # 4 studies
                   mean_year + (1|Study), data = postinitialreviewdatREV.gender_2.first, family = binomial)
-check_collinearity(mod2) #fine - max VIF = 
+check_collinearity(mod2) #fine - max VIF = 1.01
 
 #Likelihood Ratio Test
 anova(mod1, mod2) ##author * reviewer not significant: 0.20, 0.65
@@ -1083,7 +1100,7 @@ summary(mod1)
 ##remove interaction for Likelihood Ratio Test
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic  #one study
                 , data = postinitialreviewdatREV.gender_2.corresponding, family = binomial)
-check_collinearity(mod2)
+check_collinearity(mod2) #low - 1.00
 
 ##Likelihood Ratio Test
 anova(mod1, mod2) ##author * reviewer not significant: 0.084, 0.77
@@ -1140,7 +1157,7 @@ summary(mod1)
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic + Journal.impact.factor + #4 studies
                   mean_year + (1|Study), data = postinitialreviewdatREV.gender_2.last, family = binomial)
 ##check for multicollinearity
-check_collinearity(mod2) #fine - max VIF =
+check_collinearity(mod2) #fine - max VIF = 1.01
 ##Likelihood Ratio Test
 anova(mod1, mod2) ##author * reviewer not significant: 0.057, 0.81
 
@@ -1161,6 +1178,7 @@ finaldatREV$Demographic.category<- as.factor(finaldatREV$Demographic.category)
 finaldatREV$Category<- as.factor(finaldatREV$Category)
 finaldatREV$Subcategory<- as.factor(finaldatREV$Subcategory)
 finaldatREV$Study<- as.factor(finaldatREV$Study)
+finaldatREV$Reviewer.demographic<- as.factor(finaldatREV$Reviewer.demographic)
 
 ####################Subset overall data by demographic and position##################
 
@@ -1202,15 +1220,15 @@ finaldatREV.gender_2.first$mean_year<-(finaldatREV.gender_2.first$Year - 1988.75
 ##JIF provided at 1 unit intervals. Include JIF and study as fixed effects 
 ##run model with interaction term with reviewer demographic
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Reviewer.demographic + Journal.impact.factor + 
-                  # 2 studies but one is Squazzoni which has rows by JIFs. Remove years which 
-                  # had 2 levels 2013 and 2014 and use study but keep JIF
+                  # 2 studies but one is Squazzoni, which has rows by JIFs. Remove years which 
+                  # had 2 levels 2013 and 2014 (same as their respective studies) and use study but keep JIF
                   Study, data = finaldatREV.gender_2.first, family = binomial)
 summary(mod1)
 
 ##Remove interaction for Likelihood Ratio Test and test for multicollinearity issues
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic + Journal.impact.factor + 
-                  # 2 studies but one is Squazzoni which has rows by JIFs. Remove years which 
-                  # had 2 levels 2013 and 2014 and use study but keep JIF
+                  # 2 studies but one is Squazzoni, which has rows by JIFs. Remove years which 
+                  # had 2 levels 2013 and 2014 (same as their respective studies) and use study but keep JIF
                   Study, data = finaldatREV.gender_2.first, family = binomial)
 ##Check for multicollinearity
 check_collinearity(mod2) #fine - highest 1.01 
@@ -1240,7 +1258,7 @@ summary(mod1)
 ##remove interaction for Likelihood Ratio Test
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic
                 , data = finaldatREV.gender_1.last, family = binomial)
-check_collinearity(mod2)
+check_collinearity(mod2) #fine - 1.00
 ##Likelihood Ratio Test
 anova(mod1, mod2) #author * reviewer not significant: 0.54, 0.46
 
@@ -1292,6 +1310,7 @@ overalldatREV$Demographic.category<- as.factor(overalldatREV$Demographic.categor
 overalldatREV$Category<- as.factor(overalldatREV$Category)
 overalldatREV$Subcategory<- as.factor(overalldatREV$Subcategory)
 overalldatREV$Study<- as.factor(overalldatREV$Study)
+overalldatREV$Reviewer.demographic<- as.factor(overalldatREV$Reviewer.demographic)
 
 ####################Subset overall data by demographic and position##################
 
@@ -1310,7 +1329,7 @@ summary(mod1)
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic  #one study
                 , data = overalldatREV.gender_1.first, family = binomial)
 ##Check for multicollinearity
-check_collinearity(mod2)
+check_collinearity(mod2) #VIF 1.00
 ##Likelihood Ratio Test
 anova(mod1, mod2) ##author * reviewer not significant: 2.50, 0.11
 
@@ -1338,7 +1357,7 @@ summary(mod1)
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic + Study #two studies
                 , data = overalldatREV.gender_2.first, family = binomial)
 ##Check for multicollinearity
-check_collinearity(mod2)
+check_collinearity(mod2) #max VIF 1.07
 ##Likelihood Ratio Test
 anova(mod1, mod2) ##author * reviewer not significant: 1.64, 0.20
 
@@ -1366,7 +1385,7 @@ summary(mod1)
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic  #one study
                 , data = overalldatREV.gender_1.last, family = binomial)
 ##Check for multicollinearity
-check_collinearity(mod2)
+check_collinearity(mod2) 
 ##Likelihood Ratio Test
 anova(mod1, mod2) ##author * reviewer not significant: 0.49, 0.49
 
@@ -1396,7 +1415,7 @@ mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Reviewer.demographic #one s
 ##Check for multicollinearity
 check_collinearity(mod2)
 ##Likelihood Ratio Test
-anova(mod1, mod2) ##author * reviewer not significant: 0.49, 0.49
+anova(mod1, mod2) ##author * reviewer not significant: 0.26, 0.61
 
 ##estimates for figures
 emmeans(mod1, c("Demographic.category", "Reviewer.demographic"), type = "response")
@@ -1422,6 +1441,7 @@ reviewscoredat$Demographic.category<- as.factor(reviewscoredat$Demographic.categ
 reviewscoredat$Category<- as.factor(reviewscoredat$Category)
 reviewscoredat$Subcategory<- as.factor(reviewscoredat$Subcategory)
 reviewscoredat$Study<- as.factor(reviewscoredat$Study)
+reviewscoredat$Reviewer.demographic<- as.factor(reviewscoredat$Reviewer.demographic)
 
 ###################################
 ###################################
@@ -1442,6 +1462,7 @@ summary(modgaus)
 testDispersion(modgaus)
 simulationOutput <- simulateResiduals(fittedModel = modgaus, plot = F)
 plot(simulationOutput) #fine
+#when re-checked on 11/22/2022, says quantile deviations detected
 
 modbeta <- glmmTMB(Reviewer_rescaled ~ Demographic.category * Reviewer.demographic + Study
                    #two studies with 8 points total
@@ -1484,7 +1505,7 @@ reviewscoredat.gender.first$mean_year<-(reviewscoredat.gender.first$Year - 1988.
 hist(reviewscoredat.gender.first$Reviewer_rescaled, breaks = 4)
 
 ##look at gaussian and beta distributions
-##this dataset only has 2 studies but one is Squazzoni et al. that has ~85,000 manuscripts and 79 journals
+##this dataset only has 2 studies, but one is Squazzoni et al. that has ~85,000 manuscripts and 79 journals
 ##JIF provided at 1 unit intervals. Include JIF as fixed effect
 ##run model with interaction term with reviewer demographic
 modgaus <- glmmTMB(Reviewer_rescaled ~ Demographic.category * Reviewer.demographic + Journal.impact.factor +
@@ -1547,6 +1568,7 @@ summary(modgaus)
 testDispersion(modgaus)
 simulationOutput <- simulateResiduals(fittedModel = modgaus, plot = F)
 plot(simulationOutput) #dispersion and deviation fine but unable to calculate quantile regression 
+#Unable to calculate quantile regression for quantile 0.25. Possibly to few (unique) data points / predictions. Will be ommited in plots and significance calculations.
 ##maybe the sparse replicates in this category
 
 modbeta <- glmmTMB(Reviewer_rescaled ~ Demographic.category * Reviewer.demographic + Study
@@ -1571,7 +1593,7 @@ mod2 <- glmmTMB(Reviewer_rescaled ~ Demographic.category + Reviewer.demographic 
 #check for multicollinearity issue on model without interaction term
 check_collinearity(mod2) 
 ##Likelihood Ratio Test
-anova(mod1, mod2) ##Interaction not significant: 3.87, 0.049
+anova(mod1, mod2) ##Interaction significant: 3.87, 0.049
 
 ##estimates for figures
 emmeans(mod1, c("Demographic.category", "Reviewer.demographic"), type = "response")
@@ -1678,6 +1700,7 @@ simulationOutput <- simulateResiduals(fittedModel = modgaus, plot = F)
 plot(simulationOutput) #dispersion and deviation fine. 
 #error: We had to increase `err` for some of the quantiles. See fit$calibr$err. 
 #probably due to few reps 
+#Not getting error anymore on run on 11/22/2022
 
 modbeta <- glmmTMB(Reviewer_rescaled ~  Reviewer.demographic + Study
                    #two studies with 14 points total
@@ -1686,6 +1709,7 @@ summary(modbeta) ##beta seems good
 
 ##see if beta or gaussian are better
 AICctab(modgaus, modbeta, weights=TRUE)
+##beta much better; dAICc = 13.9
 
 ##use beta for inference
 mod1 <- glmmTMB(Reviewer_rescaled ~  Reviewer.demographic + Study
@@ -1796,6 +1820,10 @@ plot_model(mod1, type = "pred", terms = c("Reviewer.demographic"),   colors = "s
 nrevisionsdat <- read.csv(here("Meta Analysis", "Solution-end data", "Homophily", "Number revisions solution reviewer diversity.csv"))
 head(nrevisionsdat)
 
+nrevisionsdat$Study<-as.factor(nrevisionsdat$Study)
+nrevisionsdat$Demographic.category<-as.factor(nrevisionsdat$Demographic.category)
+nrevisionsdat$Reviewer.demographic<-as.factor(nrevisionsdat$Reviewer.demographic)
+
 nrevisionsdat.gender.first<- subset(nrevisionsdat, Author.position == "First" )
 nrevisionsdat.gender.corr<- subset(nrevisionsdat, Author.position == "Corresponding" )
 nrevisionsdat.gender.last<- subset(nrevisionsdat, Author.position == "Last" )
@@ -1808,7 +1836,7 @@ nrevisionsdat.gender.last<- subset(nrevisionsdat, Author.position == "Last" )
 hist(nrevisionsdat.gender.first$N.revisions)
 
 ##This dataset has 2 studies. One is Squazzoni et al. that has ~85,000 manuscripts and 79 journals
-##JIF provided at 1 unit intervals. Include JIF as fixed effect
+##JIF provided at 1 unit intervals. Include JIF as fixed effect and study as fixed effect
 ##run model with interaction term with reviewer demographic
 mod1 <- glmmTMB(N.revisions ~ Demographic.category * Reviewer.demographic + Journal.impact.factor + 
                   Study, data = nrevisionsdat.gender.first, family = gaussian)
@@ -1822,7 +1850,7 @@ plot(simulationOutput) #No problems detected
 mod2 <- glmmTMB(N.revisions ~ Demographic.category + Reviewer.demographic + Journal.impact.factor + 
                   Study, data = nrevisionsdat.gender.first, family = gaussian)
 ##check for multicollinearity issue
-check_collinearity(mod2) #fine - max VIF =1.14
+check_collinearity(mod2) #fine - max VIF = 1.14
 ##Likelihood Ratio Test
 anova(mod1, mod2) #author*reviewer not significant: 0.061, 0.80
 

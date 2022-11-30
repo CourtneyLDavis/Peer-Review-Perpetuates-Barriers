@@ -1,8 +1,9 @@
-############################################################
-#### Analysis of bias data                              ####
-#### Created by: Olivia Smith                           ####
-#### Last modified: 10-14 August 2022                   ####
-############################################################
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Analysis of bias data 
+# Olivia Smith
+# Date first created: April 2022
+# Date last fully checked: 20 Nov 2022
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ############ Set-up
 ############
@@ -119,7 +120,7 @@ summary(mod1)
 
 mod2 <- glmmTMB(Reviewer_rescaled ~ Demographic.category +  
                   Study, data = reviewscoredat.gender.corresponding, family=beta_family(link = "logit"))
-summary(mod2) ##similar results and AIC 0.1 apart
+summary(mod2) ##similar results
 
 ##see if beta or gaussian are better
 AICctab(mod1, mod2, weights=TRUE)
@@ -147,18 +148,19 @@ reviewscoredat.gender.last$mean_year<-(reviewscoredat.gender.last$Year - 1988.75
 hist(reviewscoredat.gender.last$Reviewer_rescaled)
 
 ##look at gaussian and beta distributions; only two studies so just include study fixed effect
-##since JIF and mean year are the same as their respective studies
-mod1 <- glmmTMB(Reviewer_rescaled ~ Demographic.category +  
+##since mean year is the same as its respective study
+##However, maintain JIF because one study is Squazzoni et al. that covers 79 journals across JIFs 1-8
+mod1 <- glmmTMB(Reviewer_rescaled ~ Demographic.category +  Journal.impact.factor +
                   Study, data = reviewscoredat.gender.last, family = gaussian)
 summary(mod1)
 
-mod2 <- glmmTMB(Reviewer_rescaled ~ Demographic.category +  
+mod2 <- glmmTMB(Reviewer_rescaled ~ Demographic.category +  Journal.impact.factor +
                   Study, data = reviewscoredat.gender.last, family=beta_family(link = "logit"))
 summary(mod2) 
 
 ##see if beta or gaussian are better
 AICctab(mod1, mod2, weights=TRUE)
-##similar results and dAICc 0.1
+##similar results and dAICc 0.2
 ##use beta for inference
 
 summary(mod2)
@@ -288,12 +290,12 @@ reviewscoredat$Continent<- as.factor(reviewscoredat$Continent)
 reviewscoredat$Language<- as.factor(reviewscoredat$Language)
 reviewscoredat$Category<- as.factor(reviewscoredat$Category)
 
-####################Subset reviewscore data by demographic and position##################
+####################Subset review score data by demographic and position##################
 
 ###################################
 ###################################
 ### country for first author
-## this study required that all authors were from that country so first/corr/last are the same data
+## this study required that all authors were from the same country, so first/corr/last are the same data
 ## therefore, the values are the same for all three positions
 reviewscoredat.country.first<- subset(reviewscoredat, Author.position == "First" )
 reviewscoredat.country.first$mean_year<-(reviewscoredat.country.first$Year - 1988.75)
@@ -322,7 +324,7 @@ check_collinearity(mod2)
 
 ##language Likelihood Ratio test
 modlang <- glmmTMB(Reviewer_rescaled ~ HDI + Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
-anova(mod2, modlang) ##1.87, 0.17, languag enot improving model
+anova(mod2, modlang) ##1.87, 0.17, language not improving model
 
 ##HDI Likelihood Ratio test
 modhdi <- glmmTMB(Reviewer_rescaled ~ Language + Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
@@ -341,6 +343,95 @@ plot_model(mod2, type = "pred", terms = c("Language"),   colors = "social",
 ##recreate SI figure  showing HDI against review scores
 tiff("hdi review scores.tiff", width = 2.5, height = 2.2, units = 'in', res = 600, compression = 'lzw')
 plot_model(mod2, type = "pred", terms = c("HDI"),  colors = c("darkorchid4", "darkcyan"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+##################################
+#########Run for % English 
+
+### country for first author
+## this study required that all authors were from the same country, so first/corr/last are the same data
+## therefore, the values are the same for all three positions
+
+##look at gaussian and beta distributions
+mod1 <- glmmTMB(Reviewer_rescaled ~ HDI + Percent_English + Continent, data = reviewscoredat.country.first, family = gaussian)
+summary(mod1) 
+
+##look at gaussian and beta distributions
+mod2 <- glmmTMB(Reviewer_rescaled ~ HDI + Percent_English + Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+summary(mod2) 
+
+##see if beta or gaussian are better
+AICctab(mod1, mod2, weights=TRUE) 
+##models with gaussian and beta similar but gaussian 1.8 better - using beta 
+##for consistency with other studies
+
+##check for multicollinearity since we included JIF and mean year
+check_collinearity(mod2) 
+#collinearity moderate; max VIF = 6.04
+
+##try combinations of two variables 
+mod2 <- glmmTMB(Reviewer_rescaled ~ Percent_English + Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+check_collinearity(mod2) ##fine: max VIF = 2.35
+
+##try combinations of two variables 
+mod2 <- glmmTMB(Reviewer_rescaled ~ Percent_English + HDI, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+check_collinearity(mod2) ##fine: max VIF = 2.49
+
+##try combinations of two variables 
+mod2 <- glmmTMB(Reviewer_rescaled ~ HDI + Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+check_collinearity(mod2) ##fine: max VIF = 1.38
+
+##make inference on models with combos of two variables
+modengcont <- glmmTMB(Reviewer_rescaled ~ Percent_English + Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+
+modenghdi <- glmmTMB(Reviewer_rescaled ~ Percent_English + HDI, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+
+modhdicont <- glmmTMB(Reviewer_rescaled ~ HDI + Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+
+##make null models for Likelihood Ratio Tests
+modeng <- glmmTMB(Reviewer_rescaled ~ Percent_English, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+
+modhdi <- glmmTMB(Reviewer_rescaled ~ HDI, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+
+modcont <- glmmTMB(Reviewer_rescaled ~ Continent, data = reviewscoredat.country.first, family=beta_family(link = "logit"))
+
+##Likelihood Ratio tests. Sequentially remove 1 variable in each set
+
+##Percent_English + Continent Likelihood Ratio Test
+##English for English + continent model
+anova(modengcont, modcont) ##0.1144, 0.7352
+##continent for English + continent model
+anova(modengcont, modeng) ##1.16, 0.76
+##get estimates for English
+summary(modengcont)
+
+##Percent English + HDI Likelihood Ratio Test
+##English for English + HDI model
+anova(modenghdi, modhdi) ##1.5372, 0.215
+##HDI for English + HDI model
+anova(modenghdi, modeng) ##1.4215, 0.2331
+summary(modenghdi)
+
+##Continent + HDI Likelihood Ratio Test
+##continent for continent + HDI
+anova(modhdicont, modhdi) ##1.6931, 0.6385
+##HDI for continent + HDI
+anova(modhdicont, modcont) ##0.5313, 0.466
+summary(modhdicont)
+
+##visualize models
+##Figure with percent English vs. review scores from HDI/Eng model
+tiff("eng hdi eng review scores.tiff", width = 2.5, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(modenghdi, type = "pred", terms = c("Percent_English"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+##Figure with HDI vs. review scores from HDI/Eng model
+tiff("hdi hdi eng review scores.tiff", width = 2.5, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(modenghdi, type = "pred", terms = c("HDI"),   colors = "social", 
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 dev.off()
@@ -473,11 +564,18 @@ mod1 <- glmmTMB(N.reviewers ~ Demographic.category + Study
 ##check model assumptions
 testDispersion(mod1)
 simulationOutput <- simulateResiduals(fittedModel = mod1, plot = F)
-plot(simulationOutput) #doesn't like the two study approach but values fine on what they showed
+plot(simulationOutput)
+##Unable to calculate quantile regression for quantile 0.25. Possibly to few (unique) data points
+##Will be ommited in plots and significance calculations.
+#doesn't like the two study approach since too few unique points 
+#but values fine on what they showed
 
 summary(mod1)
 
 emmeans(mod1, c("Demographic.category"), type = "response")
+#Warning message:
+#In qt((1 - level)/adiv, df) : NaNs produced
+
 
 ###################################
 ###################################
@@ -636,8 +734,8 @@ plot_model(mod1, type = "pred", terms = c("last_author_gender"),   colors = "soc
 
 ##################
 ##This dataset also has corresponding author's reported gender (divided into male/female/NA)
-##checking to see how closely results align with assigned gender
-##using assumed gender in results, though, due to consistency with other studies
+##checking to see how closely results align with gender the study assigned authors
+##using assumed gender in our results, though, due to consistency with other studies
 mod1 <- glmmTMB(Journals.submitted.to ~ Gender + Max.JIF.submitted.to, #corr  author reported gender
                 data = nsubmissionsdat, family = poisson)
 summary(mod1)
@@ -654,7 +752,7 @@ plot_model(mod1, type = "pred", terms = c("Gender"),   colors = "social",
 #####################################
 #####################################
 ## Made individual files for author positions for locational data to allow Likelihood Ratio Tests
-## on the same subset of data 
+## on the same subset of data for missing observations for some positions 
 
 ######Continent
 
@@ -680,7 +778,10 @@ anova(mod1, mod2) #continent impacts number submissions: 35.97, < 0.0001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(First_continent = "Tukey")) 
-summary(g1)
+summary(g1) 
+#Warning message:
+#In RET$pfunction("adjusted", ...) : Completion with error > abseps
+#Not getting warning on run on 11/20/22
 
 emmeans(mod1, c("First_continent"), type = "response")
 
@@ -808,7 +909,7 @@ plot_model(mod1, type = "pred", terms = c("Last_language"),   colors = "social",
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 
-##this dataset also surveyed corresponding authors on their English fluency. This is testing for the corresponding
+##this dataset also surveyed corresponding authors on their English fluency. The following analyses use the corresponding
 ##author's reported English fluency to see if the results are similar to the assignment to language
 ##based on country. We used the assigned language, however, to align with other studies 
 
@@ -825,6 +926,7 @@ emmeans(mod1, c("English.fluency.1"), type = "response") #estimates quite close 
 plot_model(mod1, type = "pred", terms = c("English.fluency.1"),   colors = "social", 
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
 
 ########################################
 ########################################
@@ -901,7 +1003,7 @@ nsubmissionsdatfirsthdi$First_language<- as.factor(nsubmissionsdatfirsthdi$First
 mod1 <- glmmTMB(Journals.submitted.to ~ First_continent + First_language + First_HDI2012 + 
                   Max.JIF.submitted.to, data = nsubmissionsdatfirsthdi, family = poisson)
 ##check for multicollinearity
-check_collinearity(mod1) #VIF = 12.85 for country; don't have all in the same model
+check_collinearity(mod1) #VIF = 13.13 for continent; don't have all in the same model
 
 ##try combinations of 2 to see if multicollinearity issue goes away
 mod1conthdi <- glmmTMB(Journals.submitted.to ~ First_continent + First_HDI2012 + 
@@ -910,11 +1012,11 @@ check_collinearity(mod1conthdi) #fine: max VIF = 3.79
 
 mod1contlang <- glmmTMB(Journals.submitted.to ~ First_continent + First_language + 
                           Max.JIF.submitted.to, data = nsubmissionsdatfirsthdi, family = poisson)
-check_collinearity(mod1contlang) #fine: max VIF = 3.63
+check_collinearity(mod1contlang) #fine: max VIF = 3.67
 
 mod1langhdi <- glmmTMB(Journals.submitted.to ~ First_language + First_HDI2012 + 
                          Max.JIF.submitted.to, data = nsubmissionsdatfirsthdi, family = poisson)
-check_collinearity(mod1langhdi) #fine: max VIF = 1.10
+check_collinearity(mod1langhdi) #fine: max VIF = 1.09
 
 ##Decision: report models for all possible combinations of two of the three
 
@@ -943,8 +1045,8 @@ mod3 <- glmmTMB(Journals.submitted.to ~ First_language +
                   Max.JIF.submitted.to, data = nsubmissionsdatfirsthdi, family = poisson)
 
 ##Likelihood Ratio Tests
-anova(mod1contlang, mod2) #language important: 5.41, 0.020
-anova(mod1contlang, mod3) #continent not important when accounting for language: 2.61, 0.76
+anova(mod1contlang, mod2) #language important: 5.5495, 0.018
+anova(mod1contlang, mod3) #continent not important when accounting for language: 2.5575, 0.77
 
 summary(mod1contlang)
 
@@ -957,15 +1059,15 @@ mod3 <- glmmTMB(Journals.submitted.to ~ First_HDI2012 +
                   Max.JIF.submitted.to, data = nsubmissionsdatfirsthdi, family = poisson)
 
 ##Likelihood Ratio Tests
-anova(mod1langhdi, mod2) #HDI marginally important when accounting for language: 3.77, 0.052.
-anova(mod1langhdi, mod3) #language important: 29.83, <0.0001
+anova(mod1langhdi, mod2) #HDI important when accounting for language: 4.02, 0.045
+anova(mod1langhdi, mod3) #language important: 30.27, <0.0001
 
 summary(mod1langhdi)
 
 ##of curiosity, which of three models is more informative
 library(bbmle)
 AICctab(mod1langhdi, mod1contlang, mod1conthdi, weights=TRUE) 
-##the model with language and HDI best by a long shot: 9.2 AICc from continent + language
+##the model with language and HDI best by a long shot: 9.5 AICc from continent + language
 
 ##create figure showing journals submitted to (y) vs. HDI (X), colored by country primary language
 ##exports to your working directory as a .tiff
@@ -989,7 +1091,7 @@ nsubmissionsdatcorrhdi$Corr_language<- as.factor(nsubmissionsdatcorrhdi$Corr_lan
 mod1 <- glmmTMB(Journals.submitted.to ~ Corr_continent + Corr_language + Corr_HDI2012 + 
                   Max.JIF.submitted.to, data = nsubmissionsdatcorrhdi, family = poisson)
 ##check for multicollinearity
-check_collinearity(mod1) #VIF = 12.65 for country; don't have all in the same model
+check_collinearity(mod1) #VIF = 12.95 for continent; don't have all in the same model
 
 ##try combinations of 2 to see if multicollinearity issue goes away
 mod1conthdi <- glmmTMB(Journals.submitted.to ~ Corr_continent + Corr_HDI2012 + 
@@ -998,11 +1100,11 @@ check_collinearity(mod1conthdi) #fine: max VIF = 3.78
 
 mod1contlang <- glmmTMB(Journals.submitted.to ~ Corr_continent + Corr_language + 
                           Max.JIF.submitted.to, data = nsubmissionsdatcorrhdi, family = poisson)
-check_collinearity(mod1contlang) #fine: max VIF = 3.54
+check_collinearity(mod1contlang) #fine: max VIF = 3.59
 
 mod1langhdi <- glmmTMB(Journals.submitted.to ~ Corr_language + Corr_HDI2012 + 
                          Max.JIF.submitted.to, data = nsubmissionsdatcorrhdi, family = poisson)
-check_collinearity(mod1langhdi) #fine: max VIF = 1.09
+check_collinearity(mod1langhdi) #fine: max VIF = 1.08
 
 ##Decision: report models for all possible combinations of two of the three
 
@@ -1031,8 +1133,8 @@ mod3 <- glmmTMB(Journals.submitted.to ~ Corr_language +
                   Max.JIF.submitted.to, data = nsubmissionsdatcorrhdi, family = poisson)
 
 ##Likelihood Ratio Tests
-anova(mod1contlang, mod2) #language important: 6.19, 0.013
-anova(mod1contlang, mod3) #continent not important when accounting for language: 2.35, 0.80
+anova(mod1contlang, mod2) #language important: 5.97, 0.015
+anova(mod1contlang, mod3) #continent not important when accounting for language: 2.48, 0.78
 
 summary(mod1contlang)
 
@@ -1045,7 +1147,7 @@ mod3 <- glmmTMB(Journals.submitted.to ~ Corr_HDI2012 +
                   Max.JIF.submitted.to, data = nsubmissionsdatcorrhdi, family = poisson)
 
 ##Likelihood Ratio Tests
-anova(mod1langhdi, mod2) #HDI important: 4.01, 0.045
+anova(mod1langhdi, mod2) #HDI important: 4.37, 0.037
 anova(mod1langhdi, mod3) #language important: 29.98, <0.0001
 
 summary(mod1langhdi)
@@ -1053,7 +1155,7 @@ summary(mod1langhdi)
 ##of curiosity, which of three models is more informative
 library(bbmle)
 AICctab(mod1langhdi, mod1contlang, mod1conthdi, weights=TRUE) 
-##the model with language and HDI best by a long shot: 9.7 AICc from continent + language
+##the model with language and HDI best by a long shot: 9.9 AICc from continent + language
 
 ##recreate the figure showing journals submitted to (y) vs. HDI (X), colored by country primary language
 ##exports to your working directory as a .tiff
@@ -1077,7 +1179,7 @@ nsubmissionsdatlasthdi$Last_language<- as.factor(nsubmissionsdatlasthdi$Last_lan
 mod1 <- glmmTMB(Journals.submitted.to ~ Last_continent + Last_language + Last_HDI2012 + 
                   Max.JIF.submitted.to, data = nsubmissionsdatlasthdi, family = poisson)
 ##check for multicollinearity
-check_collinearity(mod1) #VIF = 12.69 for country; don't have all in the same model
+check_collinearity(mod1) #VIF = 13.05 for continent; don't have all in the same model
 
 ##try combinations of 2 to see if multicollinearity issue goes away
 mod1conthdi <- glmmTMB(Journals.submitted.to ~ Last_continent + Last_HDI2012 + 
@@ -1086,11 +1188,11 @@ check_collinearity(mod1conthdi) #fine: max VIF = 3.80
 
 mod1contlang <- glmmTMB(Journals.submitted.to ~ Last_continent + Last_language + 
                           Max.JIF.submitted.to, data = nsubmissionsdatlasthdi, family = poisson)
-check_collinearity(mod1contlang) #fine: max VIF = 3.57
+check_collinearity(mod1contlang) #fine: max VIF = 3.63
 
 mod1langhdi <- glmmTMB(Journals.submitted.to ~ Last_language + Last_HDI2012 + 
                          Max.JIF.submitted.to, data = nsubmissionsdatlasthdi, family = poisson)
-check_collinearity(mod1langhdi) #fine: max VIF = 1.10
+check_collinearity(mod1langhdi) #fine: max VIF = 1.09
 
 ##Decision: report models for all possible combinations of two of the three
 
@@ -1119,8 +1221,8 @@ mod3 <- glmmTMB(Journals.submitted.to ~ Last_language +
                   Max.JIF.submitted.to, data = nsubmissionsdatlasthdi, family = poisson)
 
 ##Likelihood Ratio Tests
-anova(mod1contlang, mod2) #language important: 5.42, 0.020
-anova(mod1contlang, mod3) #continent not important when accounting for language: 2.73, 0.74
+anova(mod1contlang, mod2) #language important: 6.12, 0.013
+anova(mod1contlang, mod3) #continent not important when accounting for language: 2.55, 0.77
 
 summary(mod1contlang)
 
@@ -1133,15 +1235,15 @@ mod3 <- glmmTMB(Journals.submitted.to ~ Last_HDI2012 +
                   Max.JIF.submitted.to, data = nsubmissionsdatlasthdi, family = poisson)
 
 ##Likelihood Ratio Tests
-anova(mod1langhdi, mod2) #HDI not important when accounting for language: 1.32, 0.25
-anova(mod1langhdi, mod3) #language important: 27.3, <0.0001
+anova(mod1langhdi, mod2) #HDI not important when accounting for language: 1.47, 0.22
+anova(mod1langhdi, mod3) #language important: 28.3, <0.0001
 
 summary(mod1langhdi)
 
 ##of curiosity, which of three models is more informative
 library(bbmle)
 AICctab(mod1langhdi, mod1contlang, mod1conthdi, weights=TRUE) 
-##the model with language and HDI best: 6.6 AICc from continent + language
+##the model with language and HDI best: 6.9 AICc from continent + language
 
 ##create figure showing journals submitted to (y) vs. HDI (X), colored by country primary language
 ##exports to your working directory as a .tiff
@@ -1150,3 +1252,289 @@ plot_model(mod1langhdi, type = "pred", terms = c("Last_HDI2012", "Last_language"
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 dev.off()
+
+####################################################
+####################################################
+##Try running with % English instead of English primary yes/no
+
+######################
+##first author
+
+nsubmissionsdatfirstpereng <- read.csv(here("Meta Analysis", "Problem-end data", "Number submissions data FIRST COUNTRY problem percent English.csv"), fileEncoding="UTF-8-BOM")
+head(nsubmissionsdatfirstpereng)
+
+nsubmissionsdatfirstpereng$First_continent<- as.factor(nsubmissionsdatfirstpereng$First_continent)
+
+##one study with same mean study year, but the submissions data are linked to specific journals provided, so 
+##we're using maximum impact factor submitted to
+mod1 <- glmmTMB(Journals.submitted.to ~ First_continent + First_percent_English + First_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+check_collinearity(mod1) #VIF = 7.30 for continent; don't have all in the same model
+
+##try combinations of 2 to see if multicollinearity issue goes away
+mod1conthdi <- glmmTMB(Journals.submitted.to ~ First_continent + First_HDI2012 + 
+                         Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+check_collinearity(mod1conthdi) #fine: max VIF = 3.79
+
+mod1contlang <- glmmTMB(Journals.submitted.to ~ First_continent + First_percent_English + 
+                          Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+check_collinearity(mod1contlang) #fine: max VIF = 3.50
+
+mod1langhdi <- glmmTMB(Journals.submitted.to ~ First_percent_English + First_HDI2012 + 
+                         Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+check_collinearity(mod1langhdi) #fine: max VIF = 2.05
+
+##Decision: report models for all possible combinations of two of the three
+
+###HDI + continent tests: models without each for Likelihood Ratio Tests
+###Should be roughly the same as above but had to remove Maldives due to no % English available
+mod2 <- glmmTMB(Journals.submitted.to ~ First_continent + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ First_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1conthdi, mod2) #HDI marginally important: 2.70, 0.10
+anova(mod1conthdi, mod3) #continent important: 26.01, < 0.0001
+
+summary(mod1conthdi)
+
+##Tukey HSD to see which comparisons are different
+g1<-glht(mod1conthdi, linfct = mcp(First_continent = "Tukey")) 
+summary(g1)
+
+##continent + percent_English tests: models without each for Likelihood Ratio Tests
+mod2 <- glmmTMB(Journals.submitted.to ~ First_continent + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ First_percent_English + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1contlang, mod2) #percent_English important: 21.179, <0.0001
+anova(mod1contlang, mod3) #continent marginally important when accounting for percent_English: 9.71, 0.084
+
+summary(mod1contlang)
+
+##percent_English + HDI tests: models without each for Likelihood Ratio Tests
+
+mod2 <- glmmTMB(Journals.submitted.to ~ First_percent_English + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ First_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatfirstpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1langhdi, mod2) #HDI marginally important when accounting for percent_English: 3.60, 0.05793
+anova(mod1langhdi, mod3) #percent_English important: 38.385, <0.00001
+
+summary(mod1langhdi) ##HDI switches direction with % English instead of English binary
+
+##of curiosity, which of three models is more informative
+library(bbmle)
+AICctab(mod1langhdi, mod1contlang, mod1conthdi, weights=TRUE) 
+##the model with percent_English and HDI best but not by as much: 1.9 now over continent/language then continent/hdi
+##way behind with 20.4
+
+##create figure showing journals submitted to (y) vs. HDI (X), colored by country primary percent_English
+##exports to your working directory as a .tiff
+tiff("hdi sub first per eng.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1langhdi, type = "pred", terms = c("First_HDI2012", "First_percent_English"),  colors = c("darkorchid4", "darkcyan", "limegreen"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+#the sign on HDI flips. Probably from correlation between HDI and % English, although, the VIF is still OK
+plot(nsubmissionsdatfirstpereng$First_HDI2012, nsubmissionsdatfirstpereng$First_percent_English)
+#reporting results, but the HDI result is likely unreliable due to the correlation
+
+######################
+##Corresponding author
+
+nsubmissionsdatcorrpereng <- read.csv(here("Meta Analysis", "Problem-end data", "Number submissions data CORR COUNTRY problem.csv"), fileEncoding="UTF-8-BOM")
+head(nsubmissionsdatcorrpereng)
+
+nsubmissionsdatcorrpereng$Corr_continent<- as.factor(nsubmissionsdatcorrpereng$Corr_continent)
+nsubmissionsdatcorrpereng$Corr_percent_English<- as.numeric(nsubmissionsdatcorrpereng$Corr_percent_English)
+
+##one study with same mean study year, but the submissions data are linked to specific journals provided, so 
+##we're using maximum impact factor submitted to
+mod1 <- glmmTMB(Journals.submitted.to ~ Corr_continent + Corr_percent_English + Corr_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+##check for multicollinearity
+check_collinearity(mod1) #VIF = 7.15 for continent; don't have all in the same model
+
+##try combinations of 2 to see if multicollinearity issue goes away
+mod1conthdi <- glmmTMB(Journals.submitted.to ~ Corr_continent + Corr_HDI2012 + 
+                         Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+check_collinearity(mod1conthdi) #fine: max VIF = 3.78
+
+mod1contlang <- glmmTMB(Journals.submitted.to ~ Corr_continent + Corr_percent_English + 
+                          Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+check_collinearity(mod1contlang) #fine: max VIF = 3.37
+
+mod1langhdi <- glmmTMB(Journals.submitted.to ~ Corr_percent_English + Corr_HDI2012 + 
+                         Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+check_collinearity(mod1langhdi) #fine: max VIF = 2.02
+
+##Decision: report models for all possible combinations of two of the three
+
+###HDI + continent tests: models without each for Likelihood Ratio Tests
+mod2 <- glmmTMB(Journals.submitted.to ~ Corr_continent + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ Corr_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1conthdi, mod2) #HDI marginally important: 2.92, 0.088 .
+anova(mod1conthdi, mod3) #continent important: 25.04, 0.00014
+
+summary(mod1conthdi)
+
+##Tukey HSD to see which comparisons are different
+g1<-glht(mod1conthdi, linfct = mcp(Corr_continent = "Tukey")) 
+summary(g1)
+
+##continent + percent_English tests: models without each for Likelihood Ratio Tests
+mod2 <- glmmTMB(Journals.submitted.to ~ Corr_continent + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ Corr_percent_English + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1contlang, mod2) #percent_English important: 20.63, <0.0001
+anova(mod1contlang, mod3) #continent marginally important when accounting for percent_English: 9.2479, 0.09958
+
+summary(mod1contlang)
+
+##percent_English + HDI tests: models without each for Likelihood Ratio Tests
+
+mod2 <- glmmTMB(Journals.submitted.to ~ Corr_percent_English + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ Corr_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatcorrpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1langhdi, mod2) #HDI marginally important: 3.0067, 0.08292
+anova(mod1langhdi, mod3) #percent_English important: 36.514, <0.0001
+
+summary(mod1langhdi)
+
+##of curiosity, which of three models is more informative
+library(bbmle)
+AICctab(mod1langhdi, mod1contlang, mod1conthdi, weights=TRUE) 
+##the model with percent_English and HDI best by 1.8, followed by continent/language
+##then continent/HDI a ways below at dAICc 19.5
+
+##create a figure showing journals submitted to (y) vs. HDI (X), colored by country primary percent_English
+##exports to your working directory as a .tiff
+tiff("hdi sub corr per eng.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1langhdi, type = "pred", terms = c("Corr_HDI2012", "Corr_percent_English"),  colors = c("darkorchid4", "darkcyan", "limegreen"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+#the sign on HDI flips. Probably from correlation between HDI and % English, although, the VIF is still OK
+plot(nsubmissionsdatcorrpereng$Corr_HDI2012, nsubmissionsdatcorrpereng$Corr_percent_English)
+#reporting results, but the HDI result is likely unreliable due to the correlation
+
+
+######################
+##Last author
+
+nsubmissionsdatlastpereng <-read.csv(here("Meta Analysis", "Problem-end data", "Number submissions data LAST COUNTRY problem.csv"), fileEncoding="UTF-8-BOM")
+head(nsubmissionsdatlastpereng)
+
+nsubmissionsdatlastpereng$Last_continent<- as.factor(nsubmissionsdatlastpereng$Last_continent)
+nsubmissionsdatlastpereng$Last_percent_English<- as.numeric(nsubmissionsdatlastpereng$Last_percent_English)
+
+##one study with same mean study year, but the submissions data are linked to specific journals provided, so 
+##we're using maximum impact factor submitted to
+mod1 <- glmmTMB(Journals.submitted.to ~ Last_continent + Last_percent_English + Last_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+##check for multicollinearity
+check_collinearity(mod1) #VIF = 7.39 for continent; don't have all in the same model
+
+##try combinations of 2 to see if multicollinearity issue goes away
+mod1conthdi <- glmmTMB(Journals.submitted.to ~ Last_continent + Last_HDI2012 + 
+                         Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+check_collinearity(mod1conthdi) #fine: max VIF = 3.80
+
+mod1contlang <- glmmTMB(Journals.submitted.to ~ Last_continent + Last_percent_English + 
+                          Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+check_collinearity(mod1contlang) #fine: max VIF = 3.50
+
+mod1langhdi <- glmmTMB(Journals.submitted.to ~ Last_percent_English + Last_HDI2012 + 
+                         Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+check_collinearity(mod1langhdi) #fine: max VIF = 2.04
+
+##Decision: report models for all possible combinations of two of the three
+
+###HDI + continent tests: models without each for Likelihood Ratio Tests
+mod2 <- glmmTMB(Journals.submitted.to ~ Last_continent + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ Last_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1conthdi, mod2) #HDI not important when accounting for continent: 0.33, 0.56
+anova(mod1conthdi, mod3) #continent important: 23.63, 0.00026
+
+summary(mod1conthdi)
+
+##Tukey HSD to see which comparisons are different
+g1<-glht(mod1conthdi, linfct = mcp(Last_continent = "Tukey")) 
+summary(g1)
+
+##continent + percent_English tests: models without each for Likelihood Ratio Tests
+mod2 <- glmmTMB(Journals.submitted.to ~ Last_continent + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ Last_percent_English + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1contlang, mod2) #percent_English important: 17.032, <0.00001
+anova(mod1contlang, mod3) #continent marginally important when accounting for percent_English: 9.7548, 0.08249
+
+summary(mod1contlang)
+
+##Tukey HSD to see which comparisons are different
+g1<-glht(mod1contlang, linfct = mcp(Last_continent = "Tukey")) 
+summary(g1)
+
+##percent_English + HDI tests: models without each for Likelihood Ratio Tests
+
+mod2 <- glmmTMB(Journals.submitted.to ~ Last_percent_English + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+
+mod3 <- glmmTMB(Journals.submitted.to ~ Last_HDI2012 + 
+                  Max.JIF.submitted.to, data = nsubmissionsdatlastpereng, family = poisson)
+
+##Likelihood Ratio Tests
+anova(mod1langhdi, mod2) #HDI important when accounting for percent_English: 5.551, 0.01847
+anova(mod1langhdi, mod3) #percent_English important: 36.122, <0.0001
+
+summary(mod1langhdi)
+
+##of curiosity, which of three models is more informative
+library(bbmle)
+AICctab(mod1langhdi, mod1contlang, mod1conthdi, weights=TRUE) 
+##the model with percent_English and HDI best: 3.8 AICc from continent + percent_English
+
+##create figure showing journals submitted to (y) vs. HDI (X), colored by country primary percent_English
+##exports to your working directory as a .tiff
+tiff("hdi sub last.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1langhdi, type = "pred", terms = c("Last_HDI2012", "Last_percent_English"),  colors = c("darkorchid4", "darkcyan", "limegreen"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+#the sign on HDI flips. Probably from correlation between HDI and % English, although, the VIF is still OK
+plot(nsubmissionsdatlastpereng$Last_HDI2012, nsubmissionsdatlastpereng$Last_percent_English)
+#reporting results, but the HDI result is likely unreliable due to the correlation

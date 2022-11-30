@@ -1,9 +1,9 @@
-############################################################
-#### Analysis of double-blind vs. single-blind data     ####
-#### Created by: Olivia Smith                           ####
-#### Data formatting code by: Wendy Leuenberger         ####
-#### Last modified: 11-14 August 2022                   ####
-############################################################
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Analysis of double-blind vs. single-blind data
+# Olivia Smith, with data formatting code by Wendy Leuenberger
+# Date first created: April 2022
+# Date last fully checked: 21 Nov 2022
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ############ Set-up
 ############
@@ -123,6 +123,8 @@ New <- initialdat
 dim(New)[1]
 sum(Original[,c('Rejected', 'Went.through.to.next.stage')])
 
+#########################Post-initial review###################
+
 # Load data
 postinitialreviewdatog <- read.csv(here("Meta Analysis", "Solution-end data", "Double-blind", "Post initial review decision solution double blind.csv"))
 
@@ -164,8 +166,6 @@ StudyToPaper <- function(Data,
   return(SuperLongData)
 }
 
-#########################Post-initial review###################
-
 # Make the conversion
 postinitialreviewdat <- postinitialreviewdatog %>% 
   StudyToPaper(ColumnNames = c('Rejected', 'Went.through.to.next.stage'),
@@ -182,7 +182,6 @@ sum(Original[,c('Rejected', 'Went.through.to.next.stage')])
 ####################Final decision###################
 
 # Load data
-
 finaldatog <- read.csv(here("Meta Analysis", "Solution-end data", "Double-blind", "Final decision solution double blind.csv"))
 
 # For each line of data, duplicate based on Rejected and 
@@ -237,6 +236,7 @@ dim(New)[1]
 sum(Original[,c('Rejected', 'Went.through.to.next.stage')])
 
 #################Overall decision###################
+
 # Load data
 overalldatog <- read.csv(here("Meta Analysis", "Solution-end data", "Double-blind", "Overall decision solution double blind.csv"))
 
@@ -384,7 +384,7 @@ postinitialreviewdat.gender.first$mean_year<-(postinitialreviewdat.gender.first$
 ##this dataset only has 2 studies but one is Squazzoni et al. that have >100,000 manuscripts and 79 journals
 ##JIF provided at 1 unit intervals. Include JIF and study as fixed effects 
 ##run model with interaction term with blinding format
-mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Blinding.format #two studies but Squazzoni reps
+mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Blinding.format #two studies but Squazzoni divided by JIF
                 + Journal.impact.factor + Study, data = postinitialreviewdat.gender.first, family = binomial)
 summary(mod1)
 
@@ -434,6 +434,7 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Blinding.form
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 
+
 ###################################
 ###################################
 ### Gender for last author
@@ -444,7 +445,7 @@ postinitialreviewdat.gender.last$mean_year<-(postinitialreviewdat.gender.last$Ye
 ##this dataset only has 2 studies but one is Squazzoni et al. that have >100,000 manuscripts and 79 journals
 ##JIF provided at 1 unit intervals. Include JIF and study as fixed effects 
 ##run model with interaction term with blinding format
-mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Blinding.format #two studies but Squazzoni reps
+mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Blinding.format #two studies but Squazzoni separated by JIFs
                 + Journal.impact.factor + Study, data = postinitialreviewdat.gender.last, family = binomial)
 summary(mod1)
 
@@ -552,7 +553,9 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Blinding.form
 #####################################################
 #####################################################
 #####################################################
-### Load the final decision data 
+########################################################
+##FINAL DECISION
+
 finaldat$Demographic.category<- as.factor(finaldat$Demographic.category)
 finaldat$Category<- as.factor(finaldat$Category)
 finaldat$Subcategory<- as.factor(finaldat$Subcategory)
@@ -567,7 +570,6 @@ finaldat.gender.first$mean_year<-(finaldat.gender.first$Year - 1988.75)
 
 ##this dataset only has 1 study but it is Squazzoni et al. that have >100,000 manuscripts and 79 journals
 ##JIF provided at 1 unit intervals. Include JIF as fixed effect
-##run model with no interaction term to check for multicollinearity issue
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Blinding.format + Journal.impact.factor
                #just one study 
                 ,data = finaldat.gender.first, family = binomial)
@@ -601,7 +603,6 @@ finaldat.gender.last$mean_year<-(finaldat.gender.last$Year - 1988.75)
 
 ##this dataset only has 1 study but it is Squazzoni et al. that have >100,000 manuscripts and 79 journals
 ##JIF provided at 1 unit intervals. Include JIF as fixed effect
-##run model with no interaction term to check for multicollinearity issue
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category*Blinding.format + Journal.impact.factor
                 #just one study 
                 ,data = finaldat.gender.last, family = binomial)
@@ -631,7 +632,8 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Blinding.form
 #####################################################
 #####################################################
 #####################################################
-### Load the overall decision data 
+########################################################
+##OVERALL DECISION
 
 overalldat$Demographic.category<- as.factor(overalldat$Demographic.category)
 overalldat$Category<- as.factor(overalldat$Category)
@@ -688,8 +690,8 @@ mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category+Blinding.format #just one s
 anova(mod1, mod2) ####review model*continent not important: 5.86, 0.32
 
 ##estimates for figures
-##we removed the CI for Africa. There are no acceptances for double-blind for Africa, so it is causing
-##the large (0,1) 95% CIs
+##we removed the CI for Africa from figures. There are no acceptances for double-blind for Africa, 
+##so it is causing the large (0,1) 95% CIs
 emmeans(mod1, c("Demographic.category", "Blinding.format"), type = "response")
 
 ##visualize data
@@ -842,7 +844,6 @@ modcont <- glmmTMB(OutcomeBinary ~ Continent + Blinding.format + HDI * Blinding.
 modhdi <- glmmTMB(OutcomeBinary ~ Continent * Blinding.format + HDI + Blinding.format + Language * Blinding.format, data = overalldat.country.corresponding, family = binomial)
 ##Model convergence problem; singular convergence (7). See vignette('troubleshooting')
 modlang <- glmmTMB(OutcomeBinary ~ Continent * Blinding.format + HDI * Blinding.format + Language + Blinding.format, data = overalldat.country.corresponding, family = binomial)
-#Model convergence problem; singular convergence (7). See vignette('troubleshooting')
 
 #####With convergence issues, move into using a stepwise approach instead, considering interaction between
 ##blinding format and each of continent, HDI, and language, while accounting for the two variables not in the interaction
@@ -852,7 +853,7 @@ mod1cont <- glmmTMB(OutcomeBinary ~ Continent * Blinding.format + HDI + Language
 summary(mod1cont)
 
 ##Likelihood Ratio Test
-anova(mod1cont, mod1) ##continent not important predictor: 7.91, 0.16
+anova(mod1cont, mod1) ##continent*blinding format NS: 7.90, 0.16
 
 ##visualize model
 plot_model(mod1cont, type = "pred", terms = c("Continent", "Blinding.format"),   colors = "social", 
@@ -864,10 +865,10 @@ mod1hdi <- glmmTMB(OutcomeBinary ~ HDI * Blinding.format + Continent + Language,
 summary(mod1hdi)
 
 ##Likelihood Ratio Test
-anova(mod1hdi, mod1) ##different slope by HDI and blinding format: 6.57, 0.010
+anova(mod1hdi, mod1) ##different slope by HDI and blinding format: 6.58, 0.010
 
 ##Make figure looking at HDI*blinding. Exports to your working directory. Axis beautification done in PowerPoint post-export
-tiff("hdi overall blind.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+tiff("hdi overall blind corr.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
 plot_model(mod1hdi, type = "pred", terms = c("HDI", "Blinding.format"),  colors = c("olivedrab3", "gold2"), 
                          value.offset = 0.2, value.size = 8,
                          dot.size = 3, line.size = 1, vline.color = "black", width = 0)
@@ -881,11 +882,147 @@ summary(mod1lang)
 anova(mod1lang, mod1) ##language*blinding format significant: 4.53, 0.033
 
 ##Make figure looking at language*blinding. Exports to your working directory. Axis beautification done in PowerPoint post-export
-tiff("language overall blind.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
-plot_model(mod1hdi, type = "pred", terms = c("Language", "Blinding.format"),  colors = c("olivedrab3", "gold2"), 
+tiff("language overall blind corr.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1lang, type = "pred", terms = c("Language", "Blinding.format"),  colors = c("olivedrab3", "gold2"), 
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 dev.off()
+
+####################################
+####################################
+####################################
+#####OVERALL DECISIONS COUNTRY by % English speaking population
+
+### Load the overall decision data for % English speaking analyses
+### New file because Sudan data not available and need no NAs for 
+### Likelihood Ratio Tests
+overallengdatog <- read.csv(here("Meta Analysis", "Solution-end data", "Double-blind", "Overall decision solution double blind COUNTRY percent English.csv"), fileEncoding="UTF-8-BOM")
+head(overallengdatog)
+
+# For each line of data, duplicate based on Rejected and 
+# Went.through.to.next.stage
+
+# Function! ####
+StudyToPaper <- function(Data, 
+                         ColumnNames = c('Rejected', 
+                                         'Went.through.to.next.stage'), 
+                         NamesTo = 'Outcome', 
+                         ValuesTo = 'NumPapers',
+                         Binary0 = 'Rejected'){
+  # pivot so that rejected and next stage are in different rows
+  LongData <- Data %>% 
+    pivot_longer(# Columns for rejected and next stage
+      cols = ColumnNames, 
+      # Name the column with the previous column names
+      names_to = NamesTo,  
+      # Name the column with the number of papers 
+      values_to = ValuesTo)
+  
+  # Make a column with a 0/1 response for the logistic regression
+  # Binary0 is the value in NamesTo that becomes a 0
+  LongData %<>% 
+    mutate(OutcomeBinary = ifelse(LongData[[NamesTo]] == Binary0, 0, 1))
+  
+  # Replicate rows of data base on the ValuesTo column (NumPapers)
+  SuperLongData <- LongData %>% 
+    lapply(rep, LongData[[ValuesTo]]) %>% 
+    data.frame
+  
+  # Make an error if the final number of rows is not the number of papers
+  # Wouldn't work if >2 columns, shouldn't be a problem
+  if(dim(SuperLongData)[1] != sum(LongData[[ValuesTo]])){
+    stop(error = 'Number of rows does not match sum of papers')
+  }
+  
+  return(SuperLongData)
+}
+
+# Make the conversion
+overallengdat <- overallengdatog %>% 
+  StudyToPaper(ColumnNames = c('Rejected', 'Went.through.to.next.stage'),
+               NamesTo = 'Outcome', ValuesTo = 'NumPapers',
+               Binary0 = 'Rejected')
+
+# QC ####
+Original <- overallengdatog
+New <- overallengdat
+
+dim(New)[1]
+sum(Original[,c('Rejected', 'Went.through.to.next.stage')])
+
+####################################
+
+overallengdat$Country<- as.factor(overallengdat$Country)
+overallengdat$Study<- as.factor(overallengdat$Study)
+overallengdat$Continent<- as.factor(overallengdat$Continent)
+overallengdat$Category<- as.factor(overallengdat$Category)
+
+####################################
+########Corresponding author COUNTRY
+
+overallengdat.country.corresponding<- subset(overallengdat, Author.position == "Corresponding" )
+overallengdat.country.corresponding$mean_year<-(overallengdat.country.corresponding$Year - 1988.75)
+
+##Just one study so don't need to have JIF/mean year since all levels are the same for all manuscripts
+##Try model with all interactions between blinding format and continent/HDI/Percent_English
+mod1 <- glmmTMB(OutcomeBinary ~ Continent * Blinding.format + HDI * Blinding.format + Percent_English * Blinding.format, data = overallengdat.country.corresponding, family = binomial)
+summary(mod1) ##Model convergence problem; singular convergence (7). See vignette('troubleshooting')
+
+##Start with fully additive model to check for multicollinearity issues
+##Also used in Likelihood Ratio Tests below to test for interactions
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + Blinding.format + HDI + Percent_English, data = overallengdat.country.corresponding, family = binomial)
+check_collinearity(mod1) #fine - highest VIF is 3.89
+
+##try running sequentially with 2 interactions and see if those models converge
+modcont <- glmmTMB(OutcomeBinary ~ Continent + Blinding.format + HDI * Blinding.format + Percent_English * Blinding.format, data = overallengdat.country.corresponding, family = binomial)
+modhdi <- glmmTMB(OutcomeBinary ~ Continent * Blinding.format + HDI + Blinding.format + Percent_English * Blinding.format, data = overallengdat.country.corresponding, family = binomial)
+modlang <- glmmTMB(OutcomeBinary ~ Continent * Blinding.format + HDI * Blinding.format + Percent_English + Blinding.format, data = overallengdat.country.corresponding, family = binomial)
+##Model convergence problem; singular convergence (7). See vignette('troubleshooting')
+
+#####With convergence issues, move into using a stepwise approach instead, considering interaction between
+##blinding format and each of continent, HDI, and Percent_English, while accounting for the two variables not in the interaction
+
+###Interaction between continent and blinding format, while accounting for other country covariates 
+mod1cont <- glmmTMB(OutcomeBinary ~ Continent * Blinding.format + HDI + Percent_English, data = overallengdat.country.corresponding, family = binomial)
+##Warning message: In fitTMB(TMBStruc) :   Model convergence problem; singular convergence (7). See vignette('troubleshooting')
+summary(mod1cont)
+
+##Likelihood Ratio Test
+anova(mod1cont, mod1) ##continent*blinding format NS: 8.02, 0.16
+
+##visualize model
+plot_model(mod1cont, type = "pred", terms = c("Continent", "Blinding.format"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+###Interaction between HDI and blinding format, while accounting for other country covariates 
+mod1hdi <- glmmTMB(OutcomeBinary ~ HDI * Blinding.format + Continent + Percent_English, data = overallengdat.country.corresponding, family = binomial)
+summary(mod1hdi)
+
+##Likelihood Ratio Test
+anova(mod1hdi, mod1) ##different slope by HDI and blinding format: 5.81, 0.016
+
+##Make figure looking at HDI*blinding. Exports to your working directory. Axis beautification done in PowerPoint post-export
+tiff("hdi overall blind corr per eng.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1hdi, type = "pred", terms = c("HDI", "Blinding.format"),  colors = c("olivedrab3", "gold2"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+###Interaction between Percent_English and blinding format, while accounting for other country covariates 
+mod1lang <- glmmTMB(OutcomeBinary ~ Percent_English * Blinding.format + Continent + HDI, data = overallengdat.country.corresponding, family = binomial)
+summary(mod1lang)
+
+##Likelihood Ratio Test
+anova(mod1lang, mod1) ##Percent_English*blinding format significant: 5.82, 0.016
+
+##Make figure looking at Percent_English*blinding. Exports to your working directory. Axis beautification done in PowerPoint post-export
+tiff("Percent_English overall blind corr per eng.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1lang, type = "pred", terms = c("Percent_English", "Blinding.format"),  colors = c("olivedrab3", "gold2"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
 
 
 #####################################################
@@ -1006,7 +1143,7 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category", "Blinding.form
 #####################################################
 #####################################################
 #####################################################
-### Load the number revisions data 
+### Load the number reviewers data 
 nreviewersdat <- read.csv(here("Meta Analysis", "Solution-end data", "Double-blind", "Number reviewers solution double blind.csv"), fileEncoding="UTF-8-BOM")
 head(nreviewersdat)
 
@@ -1027,7 +1164,7 @@ mod1 <- glmmTMB(N.reviewers ~ Demographic.category * Blinding.format +
                 , data = nreviewersdat.gender.first, family = gaussian)
 summary(mod1)
 
-#take out interaction for VIF test
+#take out interaction for variance inflation factor test
 modvif <- glmmTMB(N.reviewers ~ Demographic.category + Blinding.format +
                   Journal.impact.factor #just one study Squazzoni
                 , data = nreviewersdat.gender.first, family = gaussian)
@@ -1067,7 +1204,7 @@ mod1 <- glmmTMB(N.reviewers ~ Demographic.category * Blinding.format +
                 , data = nreviewersdat.gender.last, family = gaussian)
 summary(mod1)
 
-#take out interaction for VIF test
+#take out interaction for variance inflation factor test
 modvif <- glmmTMB(N.reviewers ~ Demographic.category + Blinding.format +
                     Journal.impact.factor #just one study Squazzoni
                   , data = nreviewersdat.gender.last, family = gaussian)
@@ -1118,7 +1255,7 @@ mod1 <- glmmTMB(N.revisions ~ Demographic.category * Blinding.format +
                 , data = nrevisionsdat.gender.first, family = gaussian)
 summary(mod1)
 
-#take out interaction for VIF test
+#take out interaction for variance inflation factor test
 modvif <- glmmTMB(N.revisions ~ Demographic.category + Blinding.format +
                   Journal.impact.factor #just one study Squazzoni
                 , data = nrevisionsdat.gender.first, family = gaussian)
@@ -1157,7 +1294,7 @@ mod1 <- glmmTMB(N.revisions ~ Demographic.category * Blinding.format +
                 , data = nrevisionsdat.gender.last, family = gaussian)
 summary(mod1)
 
-#take out interaction for VIF test
+#take out interaction for variance inflation factor test
 modvif <- glmmTMB(N.revisions ~ Demographic.category + Blinding.format +
                     Journal.impact.factor #just one study Squazzoni
                   , data = nrevisionsdat.gender.last, family = gaussian)

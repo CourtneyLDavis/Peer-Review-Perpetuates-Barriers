@@ -1,9 +1,9 @@
-############################################################
-#### Analysis of bias data                              ####
-#### Created by: Olivia Smith                           ####
-#### Data formatting code by: Wendy Leuenberger         ####
-#### Last modified: 8-10 August 2022                    ####
-############################################################
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Analysis of bias data 
+# Olivia Smith, with data formatting code by Wendy Leuenberger
+# Date first created: April 2022
+# Date last checked: 19 Nov 2022
+#%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ############ Set-up
 ############
@@ -66,7 +66,6 @@ modelparm.glmmTMB <- function (model, coef. = function(x) fixef(x)[[component]],
 
 ###############
 ###############
-
 # Load data
 preinitialdatog <- read.csv(here("Meta Analysis", "Problem-end data", "Pre initial decision problem.csv"))
 #preinitialdatog %>% View
@@ -659,9 +658,9 @@ finaldat.gender.last<- subset(finaldat, Demographic=="Gender" & Author.position 
 finaldat.gender.last$mean_year<-(finaldat.gender.last$Year - 1988.75)
 
 ##
-mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category +  
-                  Journal.impact.factor + mean_year + (1|Study), data = finaldat.gender.last, family = binomial)
-#More than two studies so need to check for collinearity issues
+mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category +  ##only two studies but include JIF because Squazzoni et al. have 
+                  ##data by JIF 1 through 8
+                  Journal.impact.factor + Study, data = finaldat.gender.last, family = binomial)
 check_collinearity(mod1) ##check for collinearity issue; fine: highest VIF = 1.00
 summary(mod1) ##look at model
 confint(mod1)
@@ -698,7 +697,7 @@ overalldat.gender.first$mean_year<-(overalldat.gender.first$Year - 1988.75)
 ##
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category +
                   Journal.impact.factor + mean_year + (1|Study), data = overalldat.gender.first, family = binomial)
-check_collinearity(mod1) ##check for collinearity issue; fine
+check_collinearity(mod1) ##check for collinearity issue; fine - max VIF = 1.14
 summary(mod1) ##look at model
 confint(mod1)
 
@@ -719,7 +718,7 @@ overalldat.gender.corresponding$mean_year<-(overalldat.gender.corresponding$Year
 ##
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category +
                   Journal.impact.factor + mean_year + (1|Study), data = overalldat.gender.corresponding, family = binomial)
-check_collinearity(mod1) ##check for collinearity issue; fine
+check_collinearity(mod1) ##check for collinearity issue; fine - max VIF = 2.71
 summary(mod1) ##look at model
 confint(mod1)
 
@@ -777,7 +776,7 @@ confint(mod1)
 modlrt <- glmmTMB(OutcomeBinary ~ 1 # just one study
                   , data = preinitialdat.Continent.first, family = binomial)
 #likelihood ratio test for categorical variable 
-anova(mod1, modlrt) #continent improves model
+anova(mod1, modlrt) #continent improves model: 134.68, <0.00001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -805,7 +804,7 @@ confint(mod1)
 modlrt <- glmmTMB(OutcomeBinary ~ 1 # just one study
                   , data = preinitialdat.Continent.corresponding, family = binomial)
 #likelihood ratio test for categorical variable 
-anova(mod1, modlrt) #continent improves model
+anova(mod1, modlrt) #continent improves model: 142.14, <0.0001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -833,7 +832,7 @@ confint(mod1)
 modlrt <- glmmTMB(OutcomeBinary ~ 1 # just one study
                   , data = preinitialdat.Continent.last, family = binomial)
 #likelihood ratio test for categorical variable 
-anova(mod1, modlrt) #continent improves model
+anova(mod1, modlrt) #continent improves mode: 163.93, <0.0001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -911,7 +910,7 @@ confint(mod1)
 
 ##model without continent for LRT
 modlrt <- glmmTMB(OutcomeBinary ~ mean_year + (1|Study), data = initialdat.Continent.corresponding, family = binomial)
-anova(mod1, modlrt)
+anova(mod1, modlrt) ##168.8, <0.0001 for continent
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -978,7 +977,7 @@ confint(mod1)
 ##see if continent improves the model
 modlrt <- glmmTMB(OutcomeBinary ~ #only two studies in this category
                     Study, data = postinitialreviewdat.Continent.first, family = binomial)
-anova(mod1, modlrt)
+anova(mod1, modlrt) #continent important: 46.696, <0.0001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -986,6 +985,7 @@ summary(g1) ##get error Warning message:
 # In RET$pfunction("adjusted", ...) : Completion with error > abseps
 # the error goes away if you run this with the intercept removed, and the numbers are the same to 0.001 
 # we found some blogs online with the error that didn't comment on it being an issue
+# on final code check on 11/19/2022, the error did not occur. 
 
 emmeans(mod1, c("Demographic.category"), type = "response")
 
@@ -1011,7 +1011,7 @@ confint(mod1)
 ##see if continent improves the model
 modlrt <- glmmTMB(OutcomeBinary ~ #only two studies in this category
                     Study, data = postinitialreviewdat.Continent.corresponding, family = binomial)
-anova(mod1, modlrt)
+anova(mod1, modlrt) #continent important: 33.014, < 0.0001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -1038,7 +1038,7 @@ confint(mod1)
 
 modlrt <- glmmTMB(OutcomeBinary ~ 1, data = postinitialreviewdat.Continent.last, family = binomial)
 #likelihood ratio test for categorical variable 
-anova(mod1, modlrt)
+anova(mod1, modlrt) #continent important: 14.516, 0.01264
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -1046,6 +1046,7 @@ summary(g1) ##get error Warning message:
 # In RET$pfunction("adjusted", ...) : Completion with error > abseps
 # the error goes away if you run this with the intercept removed, and the numbers are the same to 0.001 
 # we found some blogs online with the error that didn't comment on it being an issue
+# note: not getting error on final run on 11/19/2022
 
 emmeans(mod1, c("Demographic.category"), type = "response")
 
@@ -1077,7 +1078,7 @@ confint(mod1)
 modlrt <- glmmTMB(OutcomeBinary ~ 1 #just one study
                   , data = finaldat.Continent.first, family = binomial)
 #likelihood ratio test for categorical variable 
-anova(mod1, modlrt)
+anova(mod1, modlrt) #continent matters: 38.101, <0.0001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
@@ -1127,19 +1128,21 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "s
 overalldat.Continent.first<- subset(overalldat, Demographic=="Continent" & Author.position == "First" )
 overalldat.Continent.first$mean_year<-(overalldat.Continent.first$Year - 1988.75)
 
-##this dataset only has 1 study and one comparison so all JIF and mean year are the same
-mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category # just one study
+##this dataset only has 2 studies so all levels of JIF and mean year are the same within studies
+mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category + Study # just two studies
                 , data = overalldat.Continent.first, family = binomial)
 summary(mod1)
 
-modlrt <- glmmTMB(OutcomeBinary ~ 1 # just one study
+modlrt <- glmmTMB(OutcomeBinary ~ Study # just two studies
                   , data = overalldat.Continent.first, family = binomial)
 #likelihood ratio test for categorical variable 
-anova(mod1, modlrt) ##model with CONTINENT better 142.56, < 0.0001
+anova(mod1, modlrt) ##model with CONTINENT better 147.58, < 0.0001
 
 ##Tukey HSD to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Demographic.category = "Tukey")) 
 summary(g1)
+#Warning messages:
+#1: In RET$pfunction("adjusted", ...) : Completion with error > abseps
 
 emmeans(mod1, c("Demographic.category"), type = "response")
 
@@ -1185,6 +1188,8 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "s
 ###############################################
 ##############################################
 ##### ENGLISH PRIMARY LANGUAGE
+##### These comparisons include all countries, 
+##### regardless of HDI
 ###############################################
 ###############################################
 ##############################################
@@ -1199,13 +1204,18 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "s
 initialdat.ESL_all.corresponding<- subset(initialdat, Demographic=="ESL_all" & Author.position == "Corresponding" )
 initialdat.ESL_all.corresponding$mean_year<-(initialdat.ESL_all.corresponding$Year - 1988.75)
 
-###only one study in this category so can't do covariates since all JIF and mean year are the same
+###only one study in this category, so don't add JIF and mean year since all values are the same
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category 
                 , data = initialdat.ESL_all.corresponding, family = binomial)
 summary(mod1)
 confint(mod1)
 
 emmeans(mod1, c("Demographic.category"), type = "response")
+
+##visualize model
+plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 
 
 ####################Subset overall data by demographic and position##################
@@ -1288,12 +1298,13 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "s
 overalldat.ESL_similarHDI.corresponding<- subset(overalldat, Demographic=="ESL_similarHDI" & Author.position == "Corresponding" )
 overalldat.ESL_similarHDI.corresponding$mean_year<-(overalldat.ESL_similarHDI.corresponding$Year - 1988.75)
 
-##3 studies in this comparison so include JIF and year
+##3 studies in this comparison so include JIF and mean year
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category + 
                   Journal.impact.factor + mean_year + (1|Study), data = overalldat.ESL_similarHDI.corresponding, family = binomial)
 ##check for multicollinearity issue
 check_collinearity(mod1) #high collinearity (highest VIF = 9.66) - just 3 studies in this category
 
+##run with just JIF or mean year and see which is better
 mod2 <- glmmTMB(OutcomeBinary ~ Demographic.category +
                   Journal.impact.factor + (1|Study), data = overalldat.ESL_similarHDI.corresponding, family = binomial)
 mod3 <- glmmTMB(OutcomeBinary ~ Demographic.category +
@@ -1301,8 +1312,9 @@ mod3 <- glmmTMB(OutcomeBinary ~ Demographic.category +
 summary(mod2)
 summary(mod3)
 
-AICctab(mod2, mod3, weights=TRUE) ##the model with jmean year 8.1 AICc better
+AICctab(mod2, mod3, weights=TRUE) ##the model with mean year 8.1 AICc better
 
+##use model with mean year to make inference
 mod1 <- glmmTMB(OutcomeBinary ~ Demographic.category + 
                   mean_year + (1|Study), data = overalldat.ESL_similarHDI.corresponding, family = binomial)
 summary(mod1)
@@ -1326,7 +1338,7 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "s
 ###################################
 #######################################
 
-####################Subset post initial review data by demographic and position##################
+####################Subset post initial review data by demographic [author prestige] and author position##################
 
 ###################################
 ###################################
@@ -1397,7 +1409,7 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "s
 #####################################################
 ### 
 
-####################Subset initial data by demographic and position##################
+####################Subset initial data by demographic [prestige institution] and author position##################
 
 ###################################
 ###################################
@@ -1464,9 +1476,10 @@ plot_model(mod1, type = "pred", terms = c("Demographic.category"),   colors = "s
 
 ###################################
 ###################################
-## All the data for overall decision for prestige_institution are from one study that is repeated 
+##All the data for overall decision for prestige_institution are from one study that is repeated for all author positions
 ##The study doesn't specify author position used. 
-##The discussion text suggests that all papers were from single intuitions, so I repeated the rows for all authors. 
+##The discussion text suggests that all papers were from single intuitions, so I repeated the rows for all authors
+##In the publication's SI and the SI data file. I only run it once below
 
 ####################Subset overall data by demographic and position##################
 
@@ -1660,7 +1673,6 @@ initialdat.nationalism.corresponding$mean_year<-(initialdat.nationalism.correspo
 mod1 <- glmmTMB(OutcomeBinary ~ Author.match, data = initialdat.nationalism.corresponding, family = binomial)
 summary(mod1) 
 confint(mod1)
-inv.logit(confint(mod1))
 
 emmeans(mod1, c("Author.match"), type = "response")
 
@@ -1680,7 +1692,6 @@ initialdat.nationalism.last$mean_year<-(initialdat.nationalism.last$Year - 1988.
 mod1 <- glmmTMB(OutcomeBinary ~ Author.match, data = initialdat.nationalism.last, family = binomial)
 summary(mod1) 
 confint(mod1)
-inv.logit(confint(mod1))
 
 emmeans(mod1, c("Author.match"), type = "response")
 
@@ -1705,7 +1716,6 @@ postinitialreview.nationalism.first$mean_year<-(postinitialreview.nationalism.fi
 mod1 <- glmmTMB(OutcomeBinary ~ Author.match, data = postinitialreview.nationalism.first, family = binomial)
 summary(mod1) 
 confint(mod1)
-inv.logit(confint(mod1))
 
 emmeans(mod1, c("Author.match"), type = "response")
 
@@ -1723,7 +1733,6 @@ postinitialreview.nationalism.corresponding$mean_year<-(postinitialreview.nation
 mod1 <- glmmTMB(OutcomeBinary ~ Author.match, data = postinitialreview.nationalism.corresponding, family = binomial)
 summary(mod1) 
 confint(mod1)
-inv.logit(confint(mod1))
 
 emmeans(mod1, c("Author.match"), type = "response")
 
@@ -1741,7 +1750,6 @@ postinitialreview.nationalism.last$mean_year<-(postinitialreview.nationalism.las
 mod1 <- glmmTMB(OutcomeBinary ~ Author.match, data = postinitialreview.nationalism.last, family = binomial)
 summary(mod1) 
 confint(mod1)
-inv.logit(confint(mod1))
 
 emmeans(mod1, c("Author.match"), type = "response")
 
@@ -1763,7 +1771,6 @@ mod1 <- glmmTMB(OutcomeBinary ~ Author.match + Journal.impact.factor
 check_collinearity(mod1) ##fine - highest VIF = 1.94
 summary(mod1) 
 confint(mod1)
-inv.logit(confint(mod1))
 
 emmeans(mod1, c("Author.match"), type = "response")
 
@@ -1834,6 +1841,8 @@ dim(New)[1]
 sum(Original[,c('Rejected', 'Went.through.to.next.stage')])
 
 ########
+
+
 
 # Load data
 initialdatog <- read.csv(here("Meta Analysis", "Problem-end data", "Initial decision problem COUNTRY.csv"))
@@ -1929,12 +1938,13 @@ check_collinearity(mod1) #highly correlated - VIF = 89.89
 
 mod1 <- glmmTMB(OutcomeBinary ~ Continent + Language ##just 1 study - not converging 
                 , data = initialdat.country.corresponding, family = binomial)
+##convergence warning
 check_collinearity(mod1) #warning since it didn't converge
 
 ###run individually since the models with all 3 variables or even combos of 2 won't work
 mod1 <- glmmTMB(OutcomeBinary ~ Continent, data = initialdat.country.corresponding, family = binomial)
-summary(mod2) ##look at model
-confint(mod2)
+summary(mod1) ##look at model
+confint(mod1)
 
 mod2 <- glmmTMB(OutcomeBinary ~ Language, data = initialdat.country.corresponding, family = binomial)
 summary(mod2) ##look at model
@@ -1977,12 +1987,70 @@ plot_model(mod3, type = "pred", terms = c("HDI"),   colors = "social",
 
 ##plot and export figure looking at HDI (x) against initial decisions (y)
 ##exports to working directory
-###create plot used in the main text. Note: axis labels made to look better in PowerPoint
+###create plot used in the SI. Note: axis labels made to look better in PowerPoint
 tiff("hdi initial corr.tiff", width = 2.5, height = 2.2, units = 'in', res = 600, compression = 'lzw')
-plot_model(mod3, type = "pred", terms = c("HDI"),  colors = c("darkorchid4", "darkcyan"), 
+plot_model(mod3, type = "pred", terms = c("HDI"),  
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 dev.off()
+
+####################################################
+################Try running initial decision country with % English instead of as a binary
+
+##Just 1 study so all levels of JIF and mean year are the same
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + Percent_English + HDI 
+                , data = initialdat.country.corresponding, family = binomial)
+check_collinearity(mod1) #high VIF = 598.23
+
+##try models with combinations of 2 of the 3
+mod1 <- glmmTMB(OutcomeBinary ~ Percent_English + HDI ##just 1 study 
+                , data = initialdat.country.corresponding, family = binomial)
+#see if there's any multicollinearity issue
+check_collinearity(mod1) #highly correlated - VIF = 17.13
+
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + HDI ##just 1 study
+                , data = initialdat.country.corresponding, family = binomial)
+check_collinearity(mod1) #highly correlated - VIF = 89.89
+
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + Percent_English ##just 1 study
+                , data = initialdat.country.corresponding, family = binomial)
+check_collinearity(mod1) #highly correlated - VIF = 53.03
+
+###run individually since the models with all 3 variables or even combos of 2 won't work
+mod1 <- glmmTMB(OutcomeBinary ~ Continent, data = initialdat.country.corresponding, family = binomial)
+summary(mod1) ##look at model
+confint(mod1)
+
+mod2 <- glmmTMB(OutcomeBinary ~ Percent_English, data = initialdat.country.corresponding, family = binomial)
+summary(mod2) ##look at model
+confint(mod2)
+
+mod3 <- glmmTMB(OutcomeBinary ~ HDI, data = initialdat.country.corresponding, family = binomial)
+summary(mod3) ##look at model
+confint(mod3)
+
+##just curious if continent, language, or HDI are more important. 
+#Null model for AICc and Likelihood Ratio Test comparison
+mod4 <- glmmTMB(OutcomeBinary ~ 1, data = initialdat.country.corresponding, family = binomial)
+
+AICctab(mod1, mod2, mod3, mod4, weights=TRUE)
+##mod2 with percent English best by dAICc = 0.7 
+
+##likelihood ratio tests on covariates
+anova(mod1, mod4) #continent improves model 66.07, < 0.0001
+anova(mod2, mod4) #language improves model 62.727, 2.374e-15 ***
+anova(mod3, mod4) #HDI improves model 57.82, < 0.0001
+
+##plot and export figure looking at Percent_English (x) against initial decisions (y)
+##exports to working directory
+###create plot used in the SI. Note: axis labels made to look better in PowerPoint
+tiff("per Eng initial corr.tiff", width = 2.5, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod2, type = "pred", terms = c("Percent_English"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+
 
 #####################################################
 #####################################################
@@ -2020,7 +2088,7 @@ anova(mod1, modesl) ## language matters: 15.35, < 0.0001
 ##HDI test
 modhdi <- glmmTMB(OutcomeBinary ~ Continent + Language ##just 1 study 
                   , data = overalldat.country.first, family = binomial)
-anova(mod1, modcont) ## HDI matters: 25.17, 0.00013
+anova(mod1, modhdi) ## HDI matters: 13.11, 0.00293 ***
 
 ###get estimates
 mod1 <- glmmTMB(OutcomeBinary ~ Continent + Language + HDI ##just 1 study 
@@ -2079,7 +2147,7 @@ overalldat.country.corresponding$mean_year<-(overalldat.country.corresponding$Ye
 ##Four underlying studies so including year and JIF in this one
 mod1 <- glmmTMB(OutcomeBinary ~ Continent + Language + HDI + 
                   mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
-check_collinearity(mod1) #not too bad - max VIF = 4.42
+check_collinearity(mod1) #not too bad - max VIF = 4.43
 summary(mod1)
 
 ##likelihood ratio tests on covariates. Build set of models, each leaving 1 variable out 
@@ -2087,7 +2155,7 @@ summary(mod1)
 #continent test
 modcont <- glmmTMB(OutcomeBinary ~ Language + HDI +
                      mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
-anova(mod1, modcont) ##continent matters: 101.05, < 0.0001
+anova(mod1, modcont) ##continent matters: 101.03, < 0.0001
 
 #language test
 modesl <- glmmTMB(OutcomeBinary ~ Continent + HDI + ## 
@@ -2097,7 +2165,7 @@ anova(mod1, modesl) ##language matters: 43.48, < 0.0001
 #HDI test
 modhdi <- glmmTMB(OutcomeBinary ~ Continent + Language + ## 
                     mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
-anova(mod1, modcont) ##HDI matters: 101.05, < 0.0001
+anova(mod1, modhdi) ##HDI matters: 252.26, < 0.0001
 
 ###get estimates
 mod1 <- glmmTMB(OutcomeBinary ~ Continent + Language + HDI + 
@@ -2107,7 +2175,8 @@ confint(mod1)
 
 ##Tukey HSD for continent since more than two groups to see which comparisons are different
 g1<-glht(mod1, linfct = mcp(Continent = "Tukey")) 
-summary(g1) #Warning message:
+summary(g1)
+#Warning message:
 #In RET$pfunction("adjusted", ...) : Completion with error > abseps
 
 ##visualize models with different combos of the variables
@@ -2124,15 +2193,153 @@ plot_model(mod1, type = "pred", terms = c("Language", "HDI"),   colors = "social
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 
-tiff("country overall.tiff", width = 7, height = 4.5, units = 'in', res = 600, compression = 'lzw')
 plot_model(mod1, type = "pred", terms = c("HDI", "Language", "Continent"),   colors = "social", 
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
-dev.off()
 
 ###create plot used in the main text. Note: axis labels made to look better in PowerPoint
 tiff("hdi overall corr.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
 plot_model(mod1, type = "pred", terms = c("HDI", "Language"),  colors = c("darkorchid4", "darkcyan"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+####################################################
+################Try running overall decision country with % English instead of as a binary
+
+###################################
+###################################
+### country for first author
+
+##only one study so all levels of JIF and mean year are the same
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + Percent_English + HDI ##just 1 study 
+                , data = overalldat.country.first, family = binomial)
+##check for multicollinearity issue
+check_collinearity(mod1) #not too bad - max VIF is 2.89
+summary(mod1)
+
+##likelihood ratio tests on covariates. Build set of models, each leaving 1 variable out 
+
+##continent test
+modcont <- glmmTMB(OutcomeBinary ~ Percent_English + HDI ##just 1 study 
+                   , data = overalldat.country.first, family = binomial)
+anova(mod1, modcont) ## continent matters: 13.467, 0.01937 *
+
+##Percent_English test
+modesl <- glmmTMB(OutcomeBinary ~ Continent + HDI ##just 1 study 
+                  , data = overalldat.country.first, family = binomial)
+anova(mod1, modesl) ## Percent_English matters: 10.822, 0.001003 **
+
+##HDI test
+modhdi <- glmmTMB(OutcomeBinary ~ Continent + Percent_English ##just 1 study 
+                  , data = overalldat.country.first, family = binomial)
+anova(mod1, modhdi) ## HDI went from *** to NS: 2.53, 0.11
+
+###get estimates
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + Percent_English + HDI ##just 1 study 
+                , data = overalldat.country.first, family = binomial)
+summary(mod1) ##look at model
+confint(mod1)
+
+##Since continent has more than 2 groups, Tukey HSD to see which comparisons are different
+g1<-glht(mod1, linfct = mcp(Continent = "Tukey")) 
+summary(g1)
+
+##visualize models with different combos of the variables
+
+plot_model(mod1, type = "pred", terms = c("Continent", "Percent_English"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("Continent", "HDI"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("Percent_English", "HDI"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("HDI", "Percent_English", "Continent"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("HDI", "Percent_English", "Continent"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("HDI", "Continent", "Percent_English"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("Continent", "HDI", "Percent_English"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+###create/export plot. Note: axis labels made to look better in PowerPoint
+tiff("first hdi overall per eng.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1, type = "pred", terms = c("HDI", "Percent_English"),  colors = c("darkorchid4", "darkcyan", "limegreen"), 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+dev.off()
+
+
+####################################
+########Corresponding author
+
+##Four underlying studies so including year and JIF in this one
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + Percent_English + HDI + 
+                  mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
+check_collinearity(mod1) #not too bad - max VIF = 4.16
+summary(mod1)
+
+##likelihood ratio tests on covariates. Build set of models, each leaving 1 variable out 
+
+#continent test
+modcont <- glmmTMB(OutcomeBinary ~ Percent_English + HDI +
+                     mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
+anova(mod1, modcont) ##continent matters: 37.95, < 0.0001 ***
+
+#Percent_English test
+modesl <- glmmTMB(OutcomeBinary ~ Continent + HDI + ## 
+                    mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
+anova(mod1, modesl) ##Percent_English matters: 86.66, < 0.0001 ***
+
+#HDI test
+modhdi <- glmmTMB(OutcomeBinary ~ Continent + Percent_English + ## 
+                    mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
+anova(mod1, modhdi) ##HDI matters: 146.95, <0.0001 ***
+
+###get estimates
+mod1 <- glmmTMB(OutcomeBinary ~ Continent + Percent_English + HDI + 
+                  mean_year + Journal.impact.factor + (1|Study), data = overalldat.country.corresponding, family = binomial)
+summary(mod1) ##look at model
+confint(mod1)
+
+##Tukey HSD for continent since more than two groups to see which comparisons are different
+g1<-glht(mod1, linfct = mcp(Continent = "Tukey")) 
+summary(g1)
+
+##visualize models with different combos of the variables
+
+plot_model(mod1, type = "pred", terms = c("Continent", "Percent_English"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("Continent", "HDI"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("Percent_English", "HDI"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+plot_model(mod1, type = "pred", terms = c("HDI", "Percent_English", "Continent"),   colors = "social", 
+           value.offset = 0.2, value.size = 8,
+           dot.size = 3, line.size = 1, vline.color = "black", width = 0)
+
+###create plot. Note: axis labels made to look better in PowerPoint
+tiff("hdi per eng overall corr.tiff", width = 3.7, height = 2.2, units = 'in', res = 600, compression = 'lzw')
+plot_model(mod1, type = "pred", terms = c("HDI", "Percent_English"),  colors = c("darkorchid4", "darkcyan", "limegreen"), 
            value.offset = 0.2, value.size = 8,
            dot.size = 3, line.size = 1, vline.color = "black", width = 0)
 dev.off()
