@@ -24,7 +24,7 @@ Each review stage has its own .csv file, separated by (1) bias without intervent
     * “Number submissions data LAST COUNTRY problem.csv” that has complete observations for the last author’s affiliation’s continent, language, and Human Development Index
 
 
-Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. The `Meta Analysis File Meta-Data.xlsx` file provides a description for all variables included in meta-analysis data files. Estimated effect sizes generated from the meta-analysis are included in Supplementary Data 5, `Dataset S6 emmeans estimates from meta-analysis.xlsx`.
+Data examining bias without considering interventions is labelled “problem”; data examining impacts of possible solutions is labelled “solution”. The `Meta Analysis File Meta-Data.xlsx` file provides a description for all variables included in meta-analysis data files. Supplementary Data 5, `Dataset S5 Percent of the population that speaks English.xlsx` provides the percent of population that speak English following the procedures outlined in Amano and Sutherland 2013 (full reference included in main text) Estimated effect sizes generated from the meta-analysis are included in Supplementary Data 6, `Dataset S6 emmeans estimates from meta-analysis.xlsx`.
 
 &nbsp;
 
